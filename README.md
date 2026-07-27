@@ -47,3 +47,4 @@ Here’s the fully updated HTML with all the improvements applied:
 | **Fluid spacing system** | Full `clamp()` spacing scale (`--space-3xs` → `--space-3xl`) + semantic aliases (`--space-card`, `--space-gap`, etc.) applied throughout |
 
 You can download the file above and open it directly in a browser. All original interactive features (infographic builder, Feynman simulator, 3D viewer, orbital game, matrix, flashcards, dark mode) are preserved.
+<img width="796" height="876" alt="image" src="https://github.com/user-attachments/assets/7467cdde-a42e-48f4-94a1-b3d630cefab7" />
