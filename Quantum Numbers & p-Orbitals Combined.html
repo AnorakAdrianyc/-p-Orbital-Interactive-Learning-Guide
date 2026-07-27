@@ -15,51 +15,103 @@
 
     <style>
         :root {
-            --primary: #007B83; /* Blue/Teal */
-            --accent: #FF9800;  /* Orange/Yellow */
+            --primary: #007B83;
+            --accent: #FF9800;
             --bg-light: #f4f7f6;
             --text-dark: #333;
             --white: #ffffff;
             --border: #ddd;
-            
-            /* Dark Mode Variables */
+
+            /* Dark Mode */
             --dm-bg: #0f172a;
             --dm-text: #e2e8f0;
             --dm-card: #1e293b;
             --dm-border: #334155;
+
+            /* ========== Fluid Spacing System ========== */
+            --space-3xs: clamp(0.15rem, 0.1rem + 0.2vw, 0.25rem);
+            --space-2xs: clamp(0.25rem, 0.15rem + 0.3vw, 0.4rem);
+            --space-xs:  clamp(0.4rem,  0.25rem + 0.4vw, 0.6rem);
+            --space-sm:  clamp(0.6rem,  0.4rem  + 0.5vw, 0.9rem);
+            --space-md:  clamp(0.9rem,  0.6rem  + 0.7vw, 1.25rem);
+            --space-lg:  clamp(1.25rem, 0.85rem + 1vw,   1.75rem);
+            --space-xl:  clamp(1.75rem, 1.1rem  + 1.4vw, 2.5rem);
+            --space-2xl: clamp(2.25rem, 1.4rem  + 1.8vw, 3.25rem);
+            --space-3xl: clamp(3rem,    1.8rem  + 2.5vw, 4.5rem);
+
+            /* Semantic aliases */
+            --space-section: var(--space-2xl);
+            --space-card:    var(--space-lg);
+            --space-stack:   var(--space-md);
+            --space-inline:  var(--space-sm);
+            --space-gap:     var(--space-md);
+
+            /* ========== Responsive Typography Scale ========== */
+            --font-xs:   clamp(0.7rem,  0.65rem + 0.2vw, 0.8rem);
+            --font-sm:   clamp(0.8rem,  0.75rem + 0.25vw, 0.9rem);
+            --font-base: clamp(0.9rem,  0.85rem + 0.3vw, 1rem);
+            --font-md:   clamp(1rem,    0.95rem + 0.35vw, 1.125rem);
+            --font-lg:   clamp(1.1rem,  1rem    + 0.45vw, 1.25rem);
+            --font-xl:   clamp(1.25rem, 1.1rem  + 0.6vw, 1.5rem);
+            --font-2xl:  clamp(1.5rem,  1.25rem + 0.8vw, 1.875rem);
+            --font-3xl:  clamp(1.75rem, 1.4rem  + 1.1vw, 2.25rem);
+            --font-4xl:  clamp(2rem,    1.6rem  + 1.4vw, 2.75rem);
+
+            --line-height-tight: 1.25;
+            --line-height-snug: 1.375;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.65;
         }
 
         /* Base Styles */
         body {
             font-family: 'Open Sans', sans-serif;
+            font-size: var(--font-base);
+            line-height: var(--line-height-normal);
             margin: 0;
             padding: 0;
             background-color: var(--bg-light);
             color: var(--text-dark);
             transition: background-color 0.3s, color 0.3s;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Dark Mode Class */
         body.dark-mode {
             background-color: var(--dm-bg);
             color: var(--dm-text);
         }
 
-        body.dark-mode .card, 
+        body.dark-mode .card,
         body.dark-mode .panel,
         body.dark-mode .infographic-container {
             background-color: var(--dm-card);
             border-color: var(--dm-border);
         }
 
-        h1, h2, h3, h4 {
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Roboto', sans-serif;
+            line-height: var(--line-height-tight);
+            margin-top: 0;
+            margin-bottom: var(--space-sm);
+            font-weight: 700;
+        }
+
+        h1 { font-size: var(--font-4xl); letter-spacing: -0.02em; }
+        h2 { font-size: var(--font-2xl); }
+        h3 { font-size: var(--font-xl); }
+        h4 { font-size: var(--font-lg); }
+
+        p {
+            margin-top: 0;
+            margin-bottom: var(--space-md);
+            line-height: var(--line-height-relaxed);
         }
 
         /* Navigation */
         nav {
             background-color: var(--primary);
-            padding: 1rem;
+            padding: var(--space-md);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -73,14 +125,15 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
+            gap: var(--space-sm);
         }
 
         nav a {
             color: var(--white);
             text-decoration: none;
             font-weight: 600;
-            padding: 0.5rem 1rem;
+            font-size: var(--font-sm);
+            padding: var(--space-xs) var(--space-sm);
             border-radius: 4px;
             transition: background 0.2s;
         }
@@ -92,8 +145,8 @@
         /* Layout */
         .container {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            margin: var(--space-xl) auto;
+            padding: 0 var(--space-md);
         }
 
         .section {
@@ -113,8 +166,8 @@
         .card {
             background: var(--white);
             border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            padding: var(--space-card);
+            margin-bottom: var(--space-xl);
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border: 1px solid var(--border);
         }
@@ -122,12 +175,7 @@
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr; }
-            nav ul { flex-direction: column; }
+            gap: var(--space-gap);
         }
 
         /* Buttons & Inputs */
@@ -135,10 +183,10 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: var(--space-sm) var(--space-md);
             border-radius: 4px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: var(--font-base);
             transition: background 0.2s;
         }
 
@@ -155,14 +203,17 @@
 
         input[type="text"], textarea {
             width: 100%;
-            padding: 0.5rem;
+            padding: var(--space-xs) var(--space-sm);
             border: 1px solid var(--border);
             border-radius: 4px;
-            margin-bottom: 1rem;
+            margin-bottom: var(--space-md);
             font-family: inherit;
+            font-size: var(--font-base);
+            box-sizing: border-box;
         }
 
-        body.dark-mode input, body.dark-mode textarea {
+        body.dark-mode input,
+        body.dark-mode textarea {
             background-color: var(--dm-card);
             color: var(--dm-text);
             border-color: var(--dm-border);
@@ -170,9 +221,9 @@
 
         /* --- INFOGRAPHIC BUILDER --- */
         .infographic-controls {
-            margin-bottom: 1.5rem;
+            margin-bottom: var(--space-lg);
             display: flex;
-            gap: 1rem;
+            gap: var(--space-sm);
             flex-wrap: wrap;
             align-items: center;
         }
@@ -180,7 +231,7 @@
         .infographic-container {
             width: 100%;
             max-width: 800px;
-            height: 600px;
+            height: 650px;
             background: white;
             margin: 0 auto;
             position: relative;
@@ -189,37 +240,75 @@
             border: 1px solid #ccc;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            /* Z-Pattern Layout */
-            /* Top-Left: Header, Top-Right: Shape, Bottom-Left: Orientations, Bottom-Right: Capacity */
+            grid-template-rows: auto 1fr 1fr auto;
         }
-        
-        /* Section Visibility */
+
         .inf-section {
-            padding: 1rem;
+            padding: var(--space-md);
             transition: opacity 0.3s;
+            overflow: hidden;
+            box-sizing: border-box;
         }
         .inf-section.hidden {
             display: none;
         }
 
-        .inf-header { grid-column: 1 / 3; grid-row: 1 / 2; text-align: center; border-bottom: 2px solid var(--primary); }
-        .inf-shape { grid-column: 2 / 3; grid-row: 1 / 2; border-left: 2px solid var(--primary); position: relative; }
-        .inf-orient { grid-column: 1 / 2; grid-row: 2 / 3; border-top: 2px solid var(--primary); position: relative; }
-        .inf-capacity { grid-column: 2 / 3; grid-row: 2 / 3; border-top: 2px solid var(--primary); position: relative; }
-        .inf-footer { grid-column: 1 / 3; grid-row: 3 / 4; text-align: center; border-top: 2px solid var(--primary); font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 1rem;}
+        .inf-header {
+            grid-column: 1 / 3;
+            grid-row: 1 / 2;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding: var(--space-sm) var(--space-md);
+        }
+        .inf-orient {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .inf-shape {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            border-left: 2px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .inf-capacity {
+            grid-column: 1 / 3;
+            grid-row: 3 / 4;
+            border-top: 2px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .inf-footer {
+            grid-column: 1 / 3;
+            grid-row: 4 / 5;
+            text-align: center;
+            border-top: 2px solid var(--primary);
+            font-size: var(--font-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: var(--space-xs);
+        }
 
-        /* SVG Elements inside Infographic */
-        .svg-dumbbell { width: 150px; height: 150px; margin: 20px auto; display: block; }
-        .svg-orientations { width: 200px; height: 200px; margin: 20px auto; display: block; }
-        .svg-parking { width: 100%; height: 100px; margin: 20px auto; display: block; }
+        .svg-dumbbell { width: 120px; height: 120px; margin: var(--space-xs) auto; display: block; }
+        .svg-orientations { width: 140px; height: 140px; margin: var(--space-xs) auto; display: block; }
+        .svg-parking { width: 90%; max-width: 280px; height: 90px; margin: var(--space-xs) auto; display: block; }
 
         /* --- FEYNMAN MODULE --- */
         .score-display {
-            font-size: 1.2rem;
+            font-size: var(--font-lg);
             font-weight: bold;
-            margin-top: 1rem;
-            padding: 1rem;
+            margin-top: var(--space-md);
+            padding: var(--space-md);
             background: #eef;
             border-radius: 4px;
             display: none;
@@ -254,13 +343,13 @@
         .game-grid {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
+            gap: var(--space-sm);
+            margin-top: var(--space-lg);
         }
         .orbital-row {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: var(--space-sm);
         }
         .orbital-box {
             width: 50px;
@@ -290,23 +379,24 @@
         
         .draggable-source {
             border: 2px dashed var(--primary);
-            padding: 10px;
+            padding: var(--space-sm);
             background: #f9f9f9;
             border-radius: 4px;
             min-height: 50px;
             display: flex;
-            gap: 10px;
+            gap: var(--space-sm);
         }
 
         /* --- MATRIX --- */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
+            margin-top: var(--space-md);
+            font-size: var(--font-sm);
         }
         th, td {
             border: 1px solid var(--border);
-            padding: 0.75rem;
+            padding: var(--space-sm);
             text-align: left;
         }
         th { background-color: rgba(0,0,0,0.05); }
@@ -323,7 +413,7 @@
             perspective: 1000px;
             width: 300px;
             height: 200px;
-            margin: 20px auto;
+            margin: var(--space-lg) auto;
             cursor: pointer;
         }
         .flashcard-inner {
@@ -349,7 +439,7 @@
             align-items: center;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 1rem;
+            padding: var(--space-md);
             box-sizing: border-box;
         }
         .flashcard-front { background-color: var(--white); color: var(--text-dark); border: 2px solid var(--primary); }
@@ -358,29 +448,98 @@
         .rating-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 1rem;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
         }
         .rating-btn {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
+            padding: var(--space-xs) var(--space-sm);
+            font-size: var(--font-sm);
         }
 
         /* Code Explained Section */
         .code-explained {
             background: #2d2d2d;
             color: #f8f8f2;
-            padding: 1rem;
+            padding: var(--space-md);
             border-radius: 8px;
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            margin-top: 2rem;
+            font-size: var(--font-sm);
+            margin-top: var(--space-xl);
         }
         .code-explained h3 { color: #f1fa8c; margin-top: 0; }
 
         /* Utility */
         .hidden-el { display: none; }
-        .hint { font-size: 0.85rem; color: #666; font-style: italic; }
+        .hint { font-size: var(--font-sm); color: #666; font-style: italic; }
+
+        /* ========== Responsive Breakpoints ========== */
+        @media (max-width: 900px) {
+            .infographic-container {
+                height: auto;
+                min-height: 520px;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto auto;
+            }
+            .inf-header  { grid-column: 1; grid-row: 1; }
+            .inf-orient  { grid-column: 1; grid-row: 2; border-bottom: 2px solid var(--primary); }
+            .inf-shape   { grid-column: 1; grid-row: 3; border-left: none; border-bottom: 2px solid var(--primary); }
+            .inf-capacity{ grid-column: 1; grid-row: 4; }
+            .inf-footer  { grid-column: 1; grid-row: 5; }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+            nav ul {
+                flex-direction: column;
+                gap: var(--space-xs);
+            }
+            nav a {
+                display: block;
+                text-align: center;
+            }
+            .card {
+                padding: var(--space-md);
+            }
+            .infographic-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .infographic-controls button {
+                width: 100%;
+            }
+            .svg-dumbbell { width: 100px; height: 100px; }
+            .svg-orientations { width: 120px; height: 120px; }
+            .svg-parking { height: 80px; }
+            #viewer-container { height: 300px; }
+            .flashcard-container {
+                width: 100%;
+                max-width: 300px;
+            }
+            .orbital-row { flex-wrap: wrap; }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 var(--space-sm);
+            }
+            .infographic-container {
+                min-height: 420px;
+            }
+            .orbital-box {
+                width: 42px;
+                height: 42px;
+                font-size: var(--font-xs);
+            }
+            table { font-size: var(--font-xs); }
+            th, td { padding: var(--space-xs); }
+            .rating-buttons { flex-wrap: wrap; }
+            button {
+                padding: var(--space-xs) var(--space-sm);
+            }
+        }
     </style>
 </head>
 <body>
@@ -421,7 +580,7 @@
     <div class="container">
         
         <!-- HEADER -->
-        <header style="text-align: center; margin-bottom: 3rem;">
+        <header style="text-align: center; margin-bottom: var(--space-2xl);">
             <h1 style="color: var(--primary);">Meet the p‑Orbital</h1>
             <h3 style="color: var(--accent);">The Dumbbell of Quantum Mechanics</h3>
             <p><strong>Build, Visualize, Master: The Ultimate Interactive Journey into p-Orbitals.</strong></p>
@@ -462,22 +621,10 @@
                                 <h2 id="display-title" style="color: var(--primary);">Meet the p‑Orbital</h2>
                                 <h4 id="display-subtitle" style="color: var(--accent);">The Dumbbell of Quantum Mechanics</h4>
                             </div>
-                            <!-- Shape -->
-                            <div class="inf-section inf-shape" id="inf-shape">
-                                <h4>Shape & Identity</h4>
-                                <p id="display-shape-text">Dumbbell Shape (l=1)</p>
-                                <!-- SVG Dumbbell -->
-                                <svg class="svg-dumbbell" viewBox="0 0 100 100">
-                                    <ellipse cx="30" cy="50" rx="20" ry="40" fill="var(--primary)" opacity="0.8"/>
-                                    <ellipse cx="70" cy="50" rx="20" ry="40" fill="var(--primary)" opacity="0.8"/>
-                                    <rect x="48" y="45" width="4" height="10" fill="#fff"/>
-                                </svg>
-                            </div>
                             <!-- Orientations -->
                             <div class="inf-section inf-orient" id="inf-orient">
                                 <h4>3 Orientations</h4>
                                 <p>px, py, pz</p>
-                                <!-- SVG Orientations -->
                                 <svg class="svg-orientations" viewBox="0 0 100 100">
                                     <ellipse cx="50" cy="50" rx="35" ry="15" transform="rotate(45 50 50)" fill="#ff4444" opacity="0.7"/>
                                     <ellipse cx="50" cy="50" rx="15" ry="35" transform="rotate(45 50 50)" fill="#44ff44" opacity="0.7"/>
@@ -485,11 +632,20 @@
                                     <circle cx="50" cy="50" r="2" fill="black"/>
                                 </svg>
                             </div>
+                            <!-- Shape -->
+                            <div class="inf-section inf-shape" id="inf-shape">
+                                <h4>Shape & Identity</h4>
+                                <p id="display-shape-text">Dumbbell Shape (l=1)</p>
+                                <svg class="svg-dumbbell" viewBox="0 0 100 100">
+                                    <ellipse cx="30" cy="50" rx="20" ry="40" fill="var(--primary)" opacity="0.8"/>
+                                    <ellipse cx="70" cy="50" rx="20" ry="40" fill="var(--primary)" opacity="0.8"/>
+                                    <rect x="48" y="45" width="4" height="10" fill="#fff"/>
+                                </svg>
+                            </div>
                             <!-- Capacity -->
                             <div class="inf-section inf-capacity" id="inf-capacity">
                                 <h4>Capacity & Rules</h4>
                                 <p id="display-cap-text">3 Orbitals × 2 e⁻ = 6 Max</p>
-                                <!-- SVG Parking Lot -->
                                 <svg class="svg-parking" viewBox="0 0 200 100">
                                     <rect x="10" y="10" width="50" height="80" fill="none" stroke="var(--primary)" stroke-width="2"/>
                                     <rect x="75" y="10" width="50" height="80" fill="none" stroke="var(--primary)" stroke-width="2"/>
@@ -523,7 +679,7 @@
                 <p>Explain p-orbitals to a 10-year-old. The system will analyze your language for simplicity.</p>
                 
                 <textarea id="feynman-input" rows="6" placeholder="Type your explanation here..."></textarea>
-                <div style="margin-bottom: 1rem;">
+                <div style="margin-bottom: var(--space-md);">
                     <button onclick="analyzeFeynman()">Analyze Explanation</button>
                     <button onclick="clearFeynman()" class="accent">Clear</button>
                 </div>
