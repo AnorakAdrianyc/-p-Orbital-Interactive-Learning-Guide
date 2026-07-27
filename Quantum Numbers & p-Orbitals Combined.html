@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet the p-Orbital: Interactive Learning Guide</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <style>
+        :root {
+            --primary: #007B83; /* Blue/Teal */
+            --accent: #FF9800;  /* Orange/Yellow */
+            --bg-light: #f4f7f6;
+            --text-dark: #333;
+            --white: #ffffff;
+            --border: #ddd;
+            
+            /* Dark Mode Variables */
+            --dm-bg: #0f172a;
+            --dm-text: #e2e8f0;
+            --dm-card: #1e293b;
+            --dm-border: #334155;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Dark Mode Class */
+        body.dark-mode {
+            background-color: var(--dm-bg);
+            color: var(--dm-text);
+        }
+
+        body.dark-mode .card, 
+        body.dark-mode .panel,
+        body.dark-mode .infographic-container {
+            background-color: var(--dm-card);
+            border-color: var(--dm-border);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            nav ul { flex-direction: column; }
+        }
+
+        /* Buttons & Inputs */
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #005f66;
+        }
+
+        button.accent {
+            background-color: var(--accent);
+        }
+        button.accent:hover {
+            background-color: #e68900;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-family: inherit;
+        }
+
+        body.dark-mode input, body.dark-mode textarea {
+            background-color: var(--dm-card);
+            color: var(--dm-text);
+            border-color: var(--dm-border);
+        }
+
+        /* --- INFOGRAPHIC BUILDER --- */
+        .infographic-controls {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .infographic-container {
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            background: white;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border: 1px solid #ccc;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            /* Z-Pattern Layout */
+            /* Top-Left: Header, Top-Right: Shape, Bottom-Left: Orientations, Bottom-Right: Capacity */
+        }
+        
+        /* Section Visibility */
+        .inf-section {
+            padding: 1rem;
+            transition: opacity 0.3s;
+        }
+        .inf-section.hidden {
+            display: none;
+        }
+
+        .inf-header { grid-column: 1 / 3; grid-row: 1 / 2; text-align: center; border-bottom: 2px solid var(--primary); }
+        .inf-shape { grid-column: 2 / 3; grid-row: 1 / 2; border-left: 2px solid var(--primary); position: relative; }
+        .inf-orient { grid-column: 1 / 2; grid-row: 2 / 3; border-top: 2px solid var(--primary); position: relative; }
+        .inf-capacity { grid-column: 2 / 3; grid-row: 2 / 3; border-top: 2px solid var(--primary); position: relative; }
+        .inf-footer { grid-column: 1 / 3; grid-row: 3 / 4; text-align: center; border-top: 2px solid var(--primary); font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 1rem;}
+
+        /* SVG Elements inside Infographic */
+        .svg-dumbbell { width: 150px; height: 150px; margin: 20px auto; display: block; }
+        .svg-orientations { width: 200px; height: 200px; margin: 20px auto; display: block; }
+        .svg-parking { width: 100%; height: 100px; margin: 20px auto; display: block; }
+
+        /* --- FEYNMAN MODULE --- */
+        .score-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #eef;
+            border-radius: 4px;
+            display: none;
+        }
+        .jargon-highlight {
+            background-color: #ffcccc;
+            padding: 2px;
+            border-radius: 2px;
+            cursor: help;
+        }
+
+        /* --- 3D VIEWER --- */
+        #viewer-container {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 8px;
+            position: relative;
+        }
+        .controls-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 4px;
+            color: white;
+            z-index: 10;
+        }
+
+        /* --- ORBITAL GAME --- */
+        .game-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .orbital-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .orbital-box {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--primary);
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: white;
+        }
+        .electron {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            cursor: grab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            color: white;
+        }
+        .electron.up { background-color: var(--accent); transform: rotate(0deg); }
+        .electron.down { background-color: var(--primary); transform: rotate(180deg); }
+        
+        .draggable-source {
+            border: 2px dashed var(--primary);
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            min-height: 50px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* --- MATRIX --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th { background-color: rgba(0,0,0,0.05); }
+        input.matrix-input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-family: inherit;
+        }
+        .row-p { background-color: rgba(255, 152, 0, 0.1); }
+
+        /* --- FLASHCARDS --- */
+        .flashcard-container {
+            perspective: 1000px;
+            width: 300px;
+            height: 200px;
+            margin: 20px auto;
+            cursor: pointer;
+        }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flashcard-container.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        .flashcard-front { background-color: var(--white); color: var(--text-dark); border: 2px solid var(--primary); }
+        .flashcard-back { background-color: var(--primary); color: white; transform: rotateY(180deg); }
+        
+        .rating-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        .rating-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Code Explained Section */
+        .code-explained {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+        .code-explained h3 { color: #f1fa8c; margin-top: 0; }
+
+        /* Utility */
+        .hidden-el { display: none; }
+        .hint { font-size: 0.85rem; color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <!-- Code Explained Block -->
+    <div class="container code-explained">
+        <h3>📚 Code Explained for Learners</h3>
+        <p><strong>File Structure:</strong> This single HTML file contains all the logic. It uses <code>style</code> for design and <code>script</code> for interactivity.</p>
+        <p><strong>Key Libraries:</strong></p>
+        <ul>
+            <li><code>html2canvas</code>: Converts the DOM element (infographic) into an image pixel-by-pixel for downloading.</li>
+            <li><code>Three.js</code>: Creates a 3D scene (canvas) where we draw geometric shapes (dumbbells) using 3D coordinates.</li>
+        </ul>
+        <p><strong>Interactive Concepts:</strong></p>
+        <ul>
+            <li><strong>State Management:</strong> We use JavaScript variables to track scores, electron counts, and visibility toggles.</li>
+            <li><strong>Event Listeners:</strong> Buttons trigger functions (e.g., <code>checkMatrixAnswers()</code>) that update the DOM.</li>
+            <li><strong>Local Storage:</strong> The flashcard system saves your progress in your browser so you don't lose it on refresh.</li>
+        </ul>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#infographic" class="nav-link active" data-target="infographic">Infographic Builder</a></li>
+                <li><a href="#feynman" class="nav-link" data-target="feynman">Feynman Simulator</a></li>
+                <li><a href="#viewer" class="nav-link" data-target="viewer">3D Viewer</a></li>
+                <li><a href="#game" class="nav-link" data-target="game">Orbital Game</a></li>
+                <li><a href="#matrix" class="nav-link" data-target="matrix">Compare Matrix</a></li>
+                <li><a href="#flashcards" class="nav-link" data-target="flashcards">Flashcards</a></li>
+                <li><a href="#howto" class="nav-link" data-target="howto">How to Use</a></li>
+                <li><button id="theme-toggle" style="margin-left: 10px; background: #333;">🌙/☀️</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <!-- HEADER -->
+        <header style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="color: var(--primary);">Meet the p‑Orbital</h1>
+            <h3 style="color: var(--accent);">The Dumbbell of Quantum Mechanics</h3>
+            <p><strong>Build, Visualize, Master: The Ultimate Interactive Journey into p-Orbitals.</strong></p>
+        </header>
+
+        <!-- MODULE 1: INFOGRAPHIC BUILDER -->
+        <div id="infographic" class="section active">
+            <div class="card">
+                <h2>🎨 A. Infographic Builder</h2>
+                <p>Assemble your "Meet the p‑Orbital" guide step-by-step. Edit text, toggle sections, and export your work.</p>
+                
+                <div class="infographic-controls">
+                    <button onclick="toggleTheme()">Toggle Theme</button>
+                    <button onclick="toggleSection('inf-header')">Toggle Header</button>
+                    <button onclick="toggleSection('inf-shape')">Toggle Shape</button>
+                    <button onclick="toggleSection('inf-orient')">Toggle Orientations</button>
+                    <button onclick="toggleSection('inf-capacity')">Toggle Capacity</button>
+                    <button class="accent" onclick="downloadInfographic()">Download as PNG</button>
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <h4>Controls</h4>
+                        <label>Title:</label>
+                        <input type="text" id="inf-title" value="Meet the p‑Orbital" oninput="updateText('inf-title', 'display-title')">
+                        <label>Subtitle:</label>
+                        <input type="text" id="inf-subtitle" value="The Dumbbell of Quantum Mechanics" oninput="updateText('inf-subtitle', 'display-subtitle')">
+                        <label>Shape Text:</label>
+                        <input type="text" id="inf-shape-text" value="Dumbbell Shape (l=1)" oninput="updateText('inf-shape-text', 'display-shape-text')">
+                        <label>Capacity Text:</label>
+                        <input type="text" id="inf-cap-text" value="3 Orbitals × 2 e⁻ = 6 Max" oninput="updateText('inf-cap-text', 'display-cap-text')">
+                    </div>
+                    <div>
+                        <h4>Visual Preview</h4>
+                        <div id="infographic-container" class="infographic-container">
+                            <!-- Header -->
+                            <div class="inf-section inf-header" id="inf-header">
+                                <h2 id="display-title" style="color: var(--primary);">Meet the p‑Orbital</h2>
+                                <h4 id="display-subtitle" style="color: var(--accent);">The Dumbbell of Quantum Mechanics</h4>
+                            </div>
+                            <!-- Shape -->
+                            <div class="inf-section inf-shape" id="inf-shape">
+                                <h4>Shape & Identity</h4>
+                                <p id="display-shape-text">Dumbbell Shape (l=1)</p>
+                                <!-- SVG Dumbbell -->
+                                <svg class="svg-dumbbell" viewBox="0 0 100 100">
+                                    <ellipse cx="30" cy="50" rx="20" ry="40" fill="var(--primary)" opacity="0.8"/>
+                                    <ellipse cx="70" cy="50" rx="20" ry="40" fill="var(--primary)" opacity="0.8"/>
+                                    <rect x="48" y="45" width="4" height="10" fill="#fff"/>
+                                </svg>
+                            </div>
+                            <!-- Orientations -->
+                            <div class="inf-section inf-orient" id="inf-orient">
+                                <h4>3 Orientations</h4>
+                                <p>px, py, pz</p>
+                                <!-- SVG Orientations -->
+                                <svg class="svg-orientations" viewBox="0 0 100 100">
+                                    <ellipse cx="50" cy="50" rx="35" ry="15" transform="rotate(45 50 50)" fill="#ff4444" opacity="0.7"/>
+                                    <ellipse cx="50" cy="50" rx="15" ry="35" transform="rotate(45 50 50)" fill="#44ff44" opacity="0.7"/>
+                                    <ellipse cx="50" cy="50" rx="15" ry="35" transform="rotate(135 50 50)" fill="#4444ff" opacity="0.7"/>
+                                    <circle cx="50" cy="50" r="2" fill="black"/>
+                                </svg>
+                            </div>
+                            <!-- Capacity -->
+                            <div class="inf-section inf-capacity" id="inf-capacity">
+                                <h4>Capacity & Rules</h4>
+                                <p id="display-cap-text">3 Orbitals × 2 e⁻ = 6 Max</p>
+                                <!-- SVG Parking Lot -->
+                                <svg class="svg-parking" viewBox="0 0 200 100">
+                                    <rect x="10" y="10" width="50" height="80" fill="none" stroke="var(--primary)" stroke-width="2"/>
+                                    <rect x="75" y="10" width="50" height="80" fill="none" stroke="var(--primary)" stroke-width="2"/>
+                                    <rect x="140" y="10" width="50" height="80" fill="none" stroke="var(--primary)" stroke-width="2"/>
+                                    <circle cx="35" cy="40" r="8" fill="var(--accent)"/>
+                                    <circle cx="35" cy="70" r="8" fill="var(--primary)"/>
+                                    <circle cx="100" cy="40" r="8" fill="var(--accent)"/>
+                                    <circle cx="100" cy="70" r="8" fill="var(--primary)"/>
+                                    <circle cx="165" cy="40" r="8" fill="var(--accent)"/>
+                                    <circle cx="165" cy="70" r="8" fill="var(--primary)"/>
+                                    <line x1="10" y1="90" x2="190" y2="90" stroke="black" stroke-width="2"/>
+                                    <text x="100" y="105" text-anchor="middle" font-size="10">Start at Level 2</text>
+                                </svg>
+                            </div>
+                            <!-- Footer -->
+                            <div class="inf-section inf-footer" id="inf-footer">
+                                <span>Learn More:</span>
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=https://www.youtube.com/watch?v=4sLXUr2HWIs" alt="QR Code" style="border:none; background:none;">
+                                <span>Video Source</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 2: FEYNMAN SIMULATOR -->
+        <div id="feynman" class="section">
+            <div class="card">
+                <h2>1. Feynman Technique Simulator</h2>
+                <p>Explain p-orbitals to a 10-year-old. The system will analyze your language for simplicity.</p>
+                
+                <textarea id="feynman-input" rows="6" placeholder="Type your explanation here..."></textarea>
+                <div style="margin-bottom: 1rem;">
+                    <button onclick="analyzeFeynman()">Analyze Explanation</button>
+                    <button onclick="clearFeynman()" class="accent">Clear</button>
+                </div>
+                <div id="feynman-score" class="score-display"></div>
+            </div>
+        </div>
+
+        <!-- MODULE 3: 3D VIEWER -->
+        <div id="viewer" class="section">
+            <div class="card">
+                <h2>2. 3D p-Orbital Viewer</h2>
+                <p>Interact with a 3D representation of p-orbitals.</p>
+                <div id="viewer-container"></div>
+            </div>
+        </div>
+
+        <!-- MODULE 4: ORBITAL FILLING GAME -->
+        <div id="game" class="section">
+            <div class="card">
+                <h2>3. Orbital Filling Game</h2>
+                <p>Practice filling electron orbitals according to Aufbau principle and Hund's rule.</p>
+                <div class="game-grid"></div>
+                <button onclick="generateGameGrid()">Start Game</button>
+            </div>
+        </div>
+
+        <!-- MODULE 5: COMPARE MATRIX -->
+        <div id="matrix" class="section">
+            <div class="card">
+                <h2>4. Compare & Contrast Matrix</h2>
+                <p>Fill in the matrix to compare s, p, and d orbitals.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Orbital Type</th>
+                            <th>Shape</th>
+                            <th>l Value</th>
+                            <th>Number of Orbitals</th>
+                            <th>Max Electrons</th>
+                            <th>First Appears at n=</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>s</td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                        </tr>
+                        <tr class="row-p">
+                            <td>p</td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                        </tr>
+                        <tr>
+                            <td>d</td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                            <td><input type="text" class="matrix-input"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button onclick="checkMatrixAnswers()">Check Answers</button>
+            </div>
+        </div>
+
+        <!-- MODULE 6: FLASHCARDS -->
+        <div id="flashcards" class="section">
+            <div class="card">
+                <h2>5. Flashcard System</h2>
+                <p>Review key concepts with flashcards.</p>
+                <div class="flashcard-container">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">Front</div>
+                        <div class="flashcard-back">Back</div>
+                    </div>
+                </div>
+                <button onclick="flipCard()">Flip Card</button>
+            </div>
+        </div>
+
+        <!-- HOW TO USE SECTION -->
+        <div id="howto" class="section">
+            <div class="card">
+                <h2>📚 How to Use</h2>
+                <p>Navigate through the different modules to explore p-orbitals in various ways.</p>
+                <ul>
+                    <li><strong>Infographic Builder:</strong> Customize and download your infographic.</li>
+                    <li><strong>Feynman Simulator:</strong> Practice explaining p-orbitals simply.</li>
+                    <li><strong>3D Viewer:</strong> Interact with a 3D model of p-orbitals.</li>
+                    <li><strong>Orbital Filling Game:</strong> Practice filling electron orbitals.</li>
+                    <li><strong>Compare Matrix:</strong> Compare s, p, and d orbitals.</li>
+                    <li><strong>Flashcards:</strong> Review key concepts.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateText(inputId, targetId) {
+            const input = document.getElementById(inputId);
+            const target = document.getElementById(targetId);
+            if (input && target) {
+                target.textContent = input.value;
+            }
+        }
+
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.toggle('hidden');
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const button = document.getElementById('theme-toggle');
+            if (button) {
+                button.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+            }
+        }
+
+        function downloadInfographic() {
+            const infographic = document.getElementById('infographic-container');
+            if (!infographic) return;
+            html2canvas(infographic).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'p-orbital-infographic.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        function analyzeFeynman() {
+            const input = document.getElementById('feynman-input');
+            const scoreEl = document.getElementById('feynman-score');
+            if (!input || !scoreEl) return;
+
+            const text = input.value.trim();
+            if (!text) {
+                scoreEl.style.display = 'block';
+                scoreEl.textContent = 'Please enter your explanation first.';
+                return;
+            }
+
+            const jargonWords = ['orbital', 'quantum', 'electron', 'probability', 'magnetic', 'spin'];
+            const words = text.split(/\s+/).filter(Boolean);
+            const jargonCount = words.filter(w => jargonWords.includes(w.toLowerCase())).length;
+            const lengthScore = Math.max(0, 10 - Math.abs(words.length - 40) / 4);
+            const score = Math.round(Math.max(0, Math.min(10, lengthScore - jargonCount * 0.5)));
+
+            scoreEl.style.display = 'block';
+            scoreEl.innerHTML = `Simplicity Score: <strong>${score}/10</strong>. ` +
+                `Word count: ${words.length}. Jargon detected: ${jargonCount}.`;
+        }
+
+        function clearFeynman() {
+            const input = document.getElementById('feynman-input');
+            const scoreEl = document.getElementById('feynman-score');
+            if (input) input.value = '';
+            if (scoreEl) {
+                scoreEl.style.display = 'none';
+                scoreEl.textContent = '';
+            }
+        }
+
+        function generateGameGrid() {
+            const gameGrid = document.querySelector('.game-grid');
+            if (!gameGrid) return;
+            gameGrid.innerHTML = '';
+
+            for (let n = 1; n <= 3; n++) {
+                const row = document.createElement('div');
+                row.classList.add('orbital-row');
+
+                if (n === 1) {
+                    const orbitalBox = document.createElement('div');
+                    orbitalBox.classList.add('orbital-box');
+                    orbitalBox.dataset.orbital = '1s';
+                    orbitalBox.textContent = '1s';
+                    row.appendChild(orbitalBox);
+                } else {
+                    const sOrbitalBox = document.createElement('div');
+                    sOrbitalBox.classList.add('orbital-box');
+                    sOrbitalBox.dataset.orbital = `${n}s`;
+                    sOrbitalBox.textContent = `${n}s`;
+                    row.appendChild(sOrbitalBox);
+
+                    for (let i = 0; i < 3; i++) {
+                        const pOrbitalBox = document.createElement('div');
+                        pOrbitalBox.classList.add('orbital-box');
+                        pOrbitalBox.dataset.orbital = `${n}p${i}`;
+                        pOrbitalBox.textContent = `${n}p${i}`;
+                        row.appendChild(pOrbitalBox);
+                    }
+                }
+
+                gameGrid.appendChild(row);
+            }
+        }
+
+        function checkMatrixAnswers() {
+            const inputs = document.querySelectorAll('.matrix-input');
+            const correctAnswers = [
+                'Spherical', '0', '1', '2', '1',
+                'Dumbbell', '1', '3', '6', '2',
+                'Cloverleaf', '2', '5', '10', '3'
+            ];
+
+            inputs.forEach((input, index) => {
+                if (input.value.trim() === correctAnswers[index]) {
+                    input.style.background = 'lightgreen';
+                } else {
+                    input.style.background = 'lightcoral';
+                }
+            });
+        }
+
+        function flipCard() {
+            const flashcardContainer = document.querySelector('.flashcard-container');
+            if (flashcardContainer) {
+                flashcardContainer.classList.toggle('flipped');
+            }
+        }
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const target = link.dataset.target;
+                if (!target) return;
+
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.toggle('active', section.id === target);
+                });
+
+                document.querySelectorAll('.nav-link').forEach(nav => {
+                    nav.classList.toggle('active', nav === link);
+                });
+
+                window.location.hash = target;
+            });
+        });
+
+        function initViewer() {
+            const container = document.getElementById('viewer-container');
+            if (!container || typeof THREE === 'undefined') return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.SphereGeometry(1, 32, 32);
+            const pxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.7 });
+            const pyMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.7 });
+            const pzMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.7 });
+
+            const px = new THREE.Mesh(geometry, pxMaterial);
+            const py = new THREE.Mesh(geometry, pyMaterial);
+            const pz = new THREE.Mesh(geometry, pzMaterial);
+            py.rotation.z = Math.PI / 2;
+            pz.rotation.y = Math.PI / 2;
+
+            scene.add(px);
+            scene.add(py);
+            scene.add(pz);
+
+            camera.position.z = 5;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                px.rotation.y += 0.005;
+                py.rotation.y += 0.005;
+                pz.rotation.y += 0.005;
+                renderer.render(scene, camera);
+            }
+
+            animate();
+            window.addEventListener('resize', () => {
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            generateGameGrid();
+            initViewer();
+            if (window.location.hash) {
+                const target = window.location.hash.replace('#', '');
+                const link = document.querySelector(`.nav-link[data-target="${target}"]`);
+                if (link) link.click();
+            }
+        });
+    </script>
+</body>
+</html>

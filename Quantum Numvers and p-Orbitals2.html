@@ -1,0 +1,212 @@
+<!-- MODULE 3: 3D VIEWER -->
+<div id="viewer" class="section">
+    <div class="card">
+        <h2>2. 3D p-Orbital Viewer</h2>
+        <p>Interact with a 3D representation of p-orbitals.</p>
+        <div id="viewer-container"></div>
+        <script>
+            // Three.js setup for 3D viewer
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(400, 400);
+            document.getElementById('viewer-container').appendChild(renderer.domElement);
+
+            // Create p-orbital geometry
+            const geometry = new THREE.SphereGeometry(1, 32, 32);
+            const pxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.7 });
+            const pyMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.7 });
+            const pzMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.7 });
+
+            const px = new THREE.Mesh(geometry, pxMaterial);
+            const py = new THREE.Mesh(geometry, pyMaterial);
+            const pz = new THREE.Mesh(geometry, pzMaterial);
+
+            scene.add(px);
+            scene.add(py);
+            scene.add(pz);
+
+            camera.position.z = 5;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+            animate();
+        </script>
+    </div>
+</div>
+
+<!-- MODULE 4: ORBITAL FILLING GAME -->
+<div id="game" class="section">
+    <div class="card">
+        <h2>3. Orbital Filling Game</h2>
+        <p>Practice filling electron orbitals according to Aufbau principle and Hund's rule.</p>
+        <div class="game-grid">
+            <!-- Orbital rows will be generated dynamically -->
+        </div>
+        <button onclick="generateGameGrid()">Start Game</button>
+        <script>
+            // JavaScript code to generate game grid and handle electron filling
+            function generateGameGrid() {
+                const gameGrid = document.querySelector('.game-grid');
+                gameGrid.innerHTML = '';
+
+                // Generate orbital rows for n=1 to n=3
+                for (let n = 1; n <= 3; n++) {
+                    const row = document.createElement('div');
+                    row.classList.add('orbital-row');
+
+                    if (n === 1) {
+                        // 1s orbital
+                        const orbitalBox = document.createElement('div');
+                        orbitalBox.classList.add('orbital-box');
+                        orbitalBox.dataset.orbital = '1s';
+                        row.appendChild(orbitalBox);
+                    } else if (n === 2) {
+                        // 2s and 2p orbitals
+                        const sOrbitalBox = document.createElement('div');
+                        sOrbitalBox.classList.add('orbital-box');
+                        sOrbitalBox.dataset.orbital = '2s';
+                        row.appendChild(sOrbitalBox);
+
+                        for (let i = 0; i < 3; i++) {
+                            const pOrbitalBox = document.createElement('div');
+                            pOrbitalBox.classList.add('orbital-box');
+                            pOrbitalBox.dataset.orbital = `2p${i}`;
+                            row.appendChild(pOrbitalBox);
+                        }
+                    } else if (n === 3) {
+                        // 3s and 3p orbitals
+                        const sOrbitalBox = document.createElement('div');
+                        sOrbitalBox.classList.add('orbital-box');
+                        sOrbitalBox.dataset.orbital = '3s';
+                        row.appendChild(sOrbitalBox);
+
+                        for (let i = 0; i < 3; i++) {
+                            const pOrbitalBox = document.createElement('div');
+                            pOrbitalBox.classList.add('orbital-box');
+                            pOrbitalBox.dataset.orbital = `3p${i}`;
+                            row.appendChild(pOrbitalBox);
+                        }
+                    }
+
+                    gameGrid.appendChild(row);
+                }
+            }
+        </script>
+    </div>
+</div>
+
+<!-- MODULE 5: COMPARE MATRIX -->
+<div id="matrix" class="section">
+    <div class="card">
+        <h2>4. Compare & Contrast Matrix</h2>
+        <p>Fill in the matrix to compare s, p, and d orbitals.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Orbital Type</th>
+                    <th>Shape</th>
+                    <th>l Value</th>
+                    <th>Number of Orbitals</th>
+                    <th>Max Electrons</th>
+                    <th>First Appears at n=</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>s</td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                </tr>
+                <tr class="row-p">
+                    <td>p</td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                </tr>
+                <tr>
+                    <td>d</td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                    <td><input type="text" class="matrix-input"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="checkMatrixAnswers()">Check Answers</button>
+        <script>
+            // JavaScript code to check matrix answers
+            function checkMatrixAnswers() {
+                // Get input values and compare with correct answers
+                const inputs = document.querySelectorAll('.matrix-input');
+                const correctAnswers = [
+                    // s-orbital answers
+                    'Spherical', '0', '1', '2', '1',
+                    // p-orbital answers
+                    'Dumbbell', '1', '3', '6', '2',
+                    // d-orbital answers
+                    'Cloverleaf', '2', '5', '10', '3'
+                ];
+
+                inputs.forEach((input, index) => {
+                    if (input.value.trim() === correctAnswers[index]) {
+                        input.style.background = 'lightgreen';
+                    } else {
+                        input.style.background = 'lightcoral';
+                    }
+                });
+            }
+        </script>
+    </div>
+</div>
+
+<!-- MODULE 6: FLASHCARDS -->
+<div id="flashcards" class="section">
+    <div class="card">
+        <h2>5. Flashcard System</h2>
+        <p>Review key concepts with flashcards.</p>
+        <div class="flashcard-container">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">Front</div>
+                <div class="flashcard-back">Back</div>
+            </div>
+        </div>
+        <button onclick="flipCard()">Flip Card</button>
+        <script>
+            // JavaScript code to handle flashcard flipping
+            function flipCard() {
+                const flashcardContainer = document.querySelector('.flashcard-container');
+                flashcardContainer.classList.toggle('flipped');
+            }
+        </script>
+    </div>
+</div>
+
+<!-- HOW TO USE SECTION -->
+<div id="howto" class="section">
+    <div class="card">
+        <h2>📚 How to Use</h2>
+        <p>Navigate through the different modules to explore p-orbitals in various ways.</p>
+        <ul>
+            <li><strong>Infographic Builder:</strong> Customize and download your infographic.</li>
+            <li><strong>Feynman Simulator:</strong> Practice explaining p-orbitals simply.</li>
+            <li><strong>3D Viewer:</strong> Interact with a 3D model of p-orbitals.</li>
+            <li><strong>Orbital Filling Game:</strong> Practice filling electron orbitals.</li>
+            <li><strong>Compare Matrix:</strong> Compare s, p, and d orbitals.</li>
+            <li><strong>Flashcards:</strong> Review key concepts.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- SCRIPT FOR NAVIGATION AND THEME TOGGLE -->
+<script>
+    // Handle navigation between sections
+    document.querySelectorAll('.nav-link').forEach
