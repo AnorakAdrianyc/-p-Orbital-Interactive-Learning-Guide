@@ -40,13 +40,15 @@ for j = 1:7
             'HorizontalAlignment', 'center', 'Color', [0.10 0.25 0.55]);
     end
 end
-text(ax, 0, 2.4, {'Hund (Beiser 7.6): maximize S, then L.', ...
-    '  S = 6 \times 1/2 = 3    \rightarrow  2S+1 = 7', ...
+text(ax, 0, 2.4, orb.lines( ...
+    'Hund (Beiser 7.6): maximize S, then L.', ...
+    '  S = 6 x 1/2 = 3    ->  2S+1 = 7', ...
     '  L = 3  (term letter F)', ...
-    '  4f^6 is less than half filled \rightarrow  J = |L - S| = 0', ...
-    '  Ground level: ^{7}F_{0}   (Beiser 7.8 term symbol).'}, 'FontSize', 11);
-text(ax, 0, 5.0, {'Closed 5s^{2} 5p^{6} shells of the Xe core remain. They shield 4f', ...
-    'from the ligands — see the radial panel. Do not assign sp^{3}d^{n} hybrids.'}, ...
+    '  4f6 is less than half filled ->  J = |L - S| = 0', ...
+    '  Ground level: 7F0   (Beiser 7.8 term symbol).'), 'FontSize', 11);
+text(ax, 0, 5.0, orb.lines( ...
+    'Closed 5s2 5p6 shells of the Xe core remain. They shield 4f', ...
+    'from the ligands - see the radial panel. Do not assign sp3dn hybrids.'), ...
     'FontSize', 10);
 axis(ax, [-2 8 -0.2 6.2]);
 title(ax, 'Eu^{3+} 4f^6 high-spin filling \rightarrow ^{7}F_{0}', 'FontSize', 13);
@@ -63,7 +65,7 @@ for k = 1:7
     col = mod(k - 1, 4);
     ax = axes('Parent', fig, 'Position', [0.06 + col * 0.24, 0.50 - row * 0.42, 0.20, 0.36]);
     hold(ax, 'on');
-    orb.angularCloud(ax, names{k}, 32, 48);
+    orb.angularCloud(ax, names{k}, 20, 28);
     title(ax, names{k}, 'FontSize', 8, 'Interpreter', 'none');
 end
 axc = axes('Parent', fig, 'Position', [0.06 0.92 0.88 0.06]);
@@ -128,7 +130,7 @@ end
 
 function drawComplex(ax, dirs, metal, ligand, label)
 hold(ax, 'on'); axis(ax, 'equal'); view(ax, 35, 22); grid(ax, 'on');
-[xs, ys, zs] = sphere(14);
+[xs, ys, zs] = sphere(10);
 surf(ax, 0.32 * xs, 0.32 * ys, 0.32 * zs, 'FaceColor', [0.55 0.20 0.65], 'EdgeColor', 'none');
 text(ax, 0, 0, 0, metal, 'Color', 'w', 'FontWeight', 'bold', 'HorizontalAlignment', 'center');
 scale = 2.05;
@@ -147,6 +149,7 @@ end
 
 function f = panelLadder(outDir)
 % Binnemans, Coord. Chem. Rev. 295, 1 (2015) free-ion barycenters.
+% Broken vertical axis: 7F_J on a 0-5500 cm^-1 scale, 5D0 sitting above a break.
 EJ = [0, 379, 1043, 1896, 2869, 3912, 4992];
 gJ = 2 * (0:6) + 1;
 E5D0 = 17227;
@@ -155,47 +158,61 @@ c = orb.physConst();
 fig = figure('Color', 'w', 'Visible', 'off');
 ax = axes('Parent', fig, 'Position', [0.10 0.10 0.55 0.80]);
 hold(ax, 'on');
-names = {'^7F_0', '^7F_1', '^7F_2', '^7F_3', '^7F_4', '^7F_5', '^7F_6'};
+names = {'7F0', '7F1', '7F2', '7F3', '7F4', '7F5', '7F6'};
 for k = 1:7
-    y = EJ(k);
-    plot(ax, [0.2 1.6], [y y], 'k-', 'LineWidth', 1.8);
-    text(ax, 1.75, y, sprintf('%s   %d cm^{-1}   g=%d   pop=%.1f%%', ...
-        names{k}, EJ(k), gJ(k), 100 * pop(k)), 'FontSize', 8, 'Interpreter', 'tex');
+    y = map7F(EJ(k));
+    plot(ax, [0.3 1.5], [y y], 'k-', 'LineWidth', 1.8);
+    text(ax, 1.65, y, sprintf('%s  %d cm^-1  g=%d  %.1f%%', ...
+        names{k}, EJ(k), gJ(k), 100 * pop(k)), 'FontSize', 8);
 end
-plot(ax, [0.2 1.6], [E5D0 E5D0], 'Color', [0.80 0.15 0.12], 'LineWidth', 2.0);
-text(ax, 1.75, E5D0, sprintf('^5D_0   %d cm^{-1}', E5D0), 'Color', [0.80 0.15 0.12], ...
-    'FontSize', 9, 'FontWeight', 'bold', 'Interpreter', 'tex');
-% emission arrows
-plot(ax, [0.05 0.05], [E5D0, EJ(2)], 'Color', [0.10 0.45 0.25], 'LineWidth', 1.6);
-text(ax, -0.55, (E5D0 + EJ(2)) / 2, {'^5D_0\to^7F_1', '590 nm', 'MD'}, ...
-    'FontSize', 8, 'Color', [0.10 0.45 0.25], 'HorizontalAlignment', 'center');
-plot(ax, [0.12 0.12], [E5D0, EJ(3)], 'Color', [0.75 0.10 0.10], 'LineWidth', 1.6);
-text(ax, 0.55, (E5D0 + EJ(3)) / 2 + 800, {'^5D_0\to^7F_2', '612 nm', 'ED hypersensitive'}, ...
-    'FontSize', 8, 'Color', [0.75 0.10 0.10]);
-ylim(ax, [-400 18500]);
-xlim(ax, [-0.9 6.2]);
-ylabel(ax, 'E (cm^{-1})');
+yD = 9.2;
+plot(ax, [0.3 1.5], [yD yD], 'Color', [0.80 0.15 0.12], 'LineWidth', 2.2);
+text(ax, 1.65, yD, sprintf('5D0  %d cm^-1', E5D0), 'Color', [0.80 0.15 0.12], ...
+    'FontSize', 9, 'FontWeight', 'bold');
+% break marks
+plot(ax, [0.15 0.45], [7.15 7.35], 'k-', 'LineWidth', 1.2);
+plot(ax, [0.15 0.45], [7.45 7.65], 'k-', 'LineWidth', 1.2);
+text(ax, 0.5, 7.4, 'break', 'FontSize', 7);
+% emission arrows (display coords)
+plot(ax, [0.12 0.12], [yD, map7F(EJ(2))], 'Color', [0.10 0.45 0.25], 'LineWidth', 1.6);
+text(ax, -0.15, 8.2, orb.lines('5D0->7F1', '590 nm MD'), 'FontSize', 8, ...
+    'Color', [0.10 0.45 0.25], 'HorizontalAlignment', 'center');
+plot(ax, [0.22 0.22], [yD, map7F(EJ(3))], 'Color', [0.75 0.10 0.10], 'LineWidth', 1.6);
+text(ax, 0.85, 8.2, orb.lines('5D0->7F2', '612 nm ED'), 'FontSize', 8, ...
+    'Color', [0.75 0.10 0.10]);
+% kT bar on the 7F scale
+plot(ax, [0.05 0.05], [map7F(0) map7F(c.kT_cm)], 'Color', [0.80 0.25 0.10], 'LineWidth', 4);
+text(ax, 0.08, map7F(c.kT_cm) + 0.15, 'kT', 'FontSize', 8, 'Color', [0.80 0.25 0.10]);
+ylim(ax, [-0.4 10.2]);
+xlim(ax, [-0.7 5.6]);
+ylabel(ax, 'display axis (7F to scale; 5D0 above break)');
 set(ax, 'XTick', []);
-title(ax, 'Eu^{3+} ^{7}F_J + ^{5}D_0 at 300 K');
+title(ax, 'Eu3+ 7F_J + 5D0 at 300 K (broken axis)');
 orb.styleAxes(ax);
-% kT bar on the 7F region — draw in a zoom inset
 ax2 = axes('Parent', fig, 'Position', [0.72 0.12 0.24 0.78]);
 hold(ax2, 'on'); axis(ax2, 'off');
 text(ax2, 0, 0.95, '300 K occupations', 'FontWeight', 'bold', 'FontSize', 11);
-text(ax2, 0, 0.82, sprintf('kT = %.0f cm^{-1}', c.kT_cm), 'FontSize', 10, ...
+text(ax2, 0, 0.82, sprintf('kT = %.0f cm^-1', c.kT_cm), 'FontSize', 10, ...
     'Color', [0.80 0.25 0.10]);
-text(ax2, 0, 0.70, sprintf('^{7}F_{0}  %.1f %%', 100*pop(1)), 'FontSize', 11);
-text(ax2, 0, 0.62, sprintf('^{7}F_{1}  %.1f %%', 100*pop(2)), 'FontSize', 11);
-text(ax2, 0, 0.54, sprintf('^{7}F_{2}  %.1f %%', 100*pop(3)), 'FontSize', 11);
-text(ax2, 0, 0.42, {'Hot bands from thermally', ...
-    'populated ^{7}F_{1} enable', ...
-    'luminescence thermometry.', '', ...
+text(ax2, 0, 0.70, sprintf('7F0  %.1f %%', 100 * pop(1)), 'FontSize', 11);
+text(ax2, 0, 0.62, sprintf('7F1  %.1f %%', 100 * pop(2)), 'FontSize', 11);
+text(ax2, 0, 0.54, sprintf('7F2  %.1f %%', 100 * pop(3)), 'FontSize', 11);
+text(ax2, 0, 0.42, orb.lines( ...
+    'Hot bands from thermally', ...
+    'populated 7F1 enable', ...
+    'luminescence thermometry.', ...
     'Binnemans, Coord. Chem. Rev.', ...
-    '295, 1 (2015). Beiser 9.2.', '', ...
-    'GEST3015 V: Eu^{3+} as a', ...
-    'spectroscopic probe / phosphor.'}, 'FontSize', 8);
+    '295, 1 (2015). Beiser 9.2.', ...
+    'GEST3015 V: Eu3+ as a', ...
+    'spectroscopic probe / phosphor.'), 'FontSize', 8);
 xlim(ax2, [0 1]); ylim(ax2, [0 1]);
 f = fullfile(outDir, 'eu3_ladder_300K.svg');
 orb.exportSvg(fig, f, 1000, 780);
 close(fig);
 end
+
+function y = map7F(Ecm)
+% Map 0-5500 cm^-1 onto display 0-7.
+y = 7 * Ecm / 5500;
+end
+

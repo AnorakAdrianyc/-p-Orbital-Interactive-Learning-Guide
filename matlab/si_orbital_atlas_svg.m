@@ -33,9 +33,10 @@ drawStage(ax, 7.8, 'four equivalent sp^3 (diamond cubic)', ...
     {'sp3', [1 1 1 1]});
 axis(ax, [-2.5 8 -0.5 12]);
 title(ax, 'Si valence filling \rightarrow sp^3 (Beiser 8.5, L2)', 'FontSize', 12);
-text(ax, 0, 11.4, {'Hund: two unpaired 3p electrons in the atom.'; ...
-    'In the crystal the four sp^3 hybrids each hold one electron and form', ...
-    'four equivalent Si-Si sigma bonds (GEST3015 I-II).'}, ...
+text(ax, 0, 11.4, orb.lines( ...
+    'Hund: two unpaired 3p electrons in the atom.', ...
+    'In the crystal the four sp3 hybrids each hold one electron and form', ...
+    'four equivalent Si-Si sigma bonds (GEST3015 I-II).'), ...
     'FontSize', 8, 'VerticalAlignment', 'top');
 f = fullfile(outDir, 'si_filling.svg');
 orb.exportSvg(fig, f, 900, 700);
@@ -139,8 +140,11 @@ xlabel(ax, 'x (A)');
 ylabel(ax, '(y+z)/sqrt(2)  [plane y = z]');
 title(ax, sprintf('|\\psi_{sp^3}|^2, two lobes, angle arccos(-1/3) = 109.47^\\circ'));
 orb.styleAxes(ax);
-cb = colorbar(ax);
-set(get(cb, 'Title'), 'String', '|\\psi|^2');
+try
+    cb = colorbar(ax);
+    set(get(cb, 'Title'), 'String', '|psi|^2');
+catch
+end
 f = fullfile(outDir, 'si_sp3_cross_section.svg');
 orb.exportSvg(fig, f, 900, 720);
 close(fig);
@@ -154,7 +158,7 @@ ax = axes('Parent', fig); hold(ax, 'on');
 axis(ax, 'equal');
 view(ax, 35, 22);
 grid(ax, 'on');
-[xs, ys, zs] = sphere(18);
+[xs, ys, zs] = sphere(12);
 % Central nucleus
 surf(ax, 0.28 * xs, 0.28 * ys, 0.28 * zs, ...
     'FaceColor', [0.75 0.15 0.12], 'EdgeColor', 'none');
@@ -174,8 +178,8 @@ end
 xlabel(ax, 'x (A)'); ylabel(ax, 'y (A)'); zlabel(ax, 'z (A)');
 title(ax, 'Si diamond-cubic: four sp^3 hybrids (ideal tetrahedron)');
 text(ax, -2.8, -2.8, 2.6, ...
-    {'a = 5.431 A (300 K); nn = \sqrt3 a/4 = 2.352 A'; ...
-     'Unlit patches: not a DFT isosurface. GEST3015 I-II / Beiser 10.3'}, ...
+    orb.lines('a = 5.431 A (300 K); nn = sqrt(3) a/4 = 2.352 A', ...
+     'Unlit patches: not a DFT isosurface. GEST3015 I-II / Beiser 10.3'), ...
     'FontSize', 8, 'BackgroundColor', 'w');
 xlim(ax, [-3 3]); ylim(ax, [-3 3]); zlim(ax, [-3 3]);
 f = fullfile(outDir, 'si_sp3_tetrahedron.svg');
@@ -204,8 +208,8 @@ text(ax, xG, 1.8, sprintf('E_g = %.2f eV (300 K)', Eg), 'FontSize', 11, 'FontWei
 text(ax, xG, 1.35, sprintf('kT = %.1f meV    E_g / kT \\approx %.0f', c.kT_meV, Eg / c.kT_eV), ...
     'FontSize', 10);
 text(ax, xG, 0.90, 'n_i \\approx 1\\times10^{10} cm^{-3} (300 K)', 'FontSize', 10);
-text(ax, xG, 0.45, {'Indirect gap: VBM at \\Gamma, CBM near X'; ...
-    '(phonon required). Beiser 10.6-10.7.'}, 'FontSize', 9);
+text(ax, xG, 0.45, orb.lines('Indirect gap: VBM at Gamma, CBM near X', ...
+    '(phonon required). Beiser 10.6-10.7.'), 'FontSize', 9);
 % kT bar next to the gap
 gapBottom = 1.3 + 1.10;
 gapTop = gapBottom + Eg;
