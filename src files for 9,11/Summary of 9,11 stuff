@@ -1,0 +1,28 @@
+## Summary of Today's Session
+
+Today's work covered your **GEST3015 (Smart Materials: Structures and Properties)** coursework, spanning academic research, code development, scientific quality control, and repository publishing.
+
+### Academic Research and Course Mapping
+
+- Mapped **Section V ("Smart materials: applied studies")** of your GEST3015 outline to specific chapters of Beiser's *Concepts of Modern Physics*, identifying §10.7 (semiconductor devices), §10.9–10.10 (superconductivity), plus supporting sections §9.8, §8.8, and §4.9 after a self-audit using a confusion-matrix accuracy check. [ppl-ai-file-upload.s3.us-east-1.amazonaws](https://ppl-ai-file-upload.s3.us-east-1.amazonaws.com/web/direct-files/attachments/177800/3931db7f-59b1-44ca-8ae2-31b6d63cf944/GEST3015-2.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Checksum-Mode=ENABLED&X-Amz-Credential=ASIA2F3EMEYEX2E37S6D%2F20260911%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260911T111053Z&X-Amz-Expires=1482&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJGMEQCIHy4ia06CnVVEN5qZtmLN6ok52NvHWsxeUo6z%2Bg%2FIO06AiBajRcM%2FrckwDQck7O0RzJfXryPzPGD5bRylJojUOw7ECqJBQib%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDY5OTc1MzMwOTcwNSIMsW1YChvDw20SyOLDKt0Eve8jDATGkM4X8DCMfk%2B9IxgodbKiGzooBTv833BaeXkXRcQH0inwMVsM9ce6cfNdfV7yfqKMkKw8yLuKcFEiRTXtN18cBcn3u%2F72WCZtq0IswXVE0%2FEkiTqubecCaqPU41d1k%2FMHZv93Ww3uF6ggWBfNBCcrOy4N0sj0HczgyIlHfkGXx1Pz8S%2B1%2Fm7cy4nZRf6zudpHhSj2Uq818OaVeJBDqEa%2FfWA0iIFPe67%2FYXPuJlHjayLJYaS%2BRUtPS%2FXuTnEjxTq%2BQs%2FUCnuFL7K%2Bwsrt28iyoh1pkxN5nNRKzw96orIRF7rvuavqi399cSeWp%2BBVqBB5fUE3TBrmwCZPeY2K41f4eMB0TXMAtfpoV%2BFSZKoDGzPqRnU%2BbQibIHQ7RVEpdgl%2BIdI8C%2F67Qh8vMVqc4XXWjb0ImLzwiemw7gum9LjKhfZk1ZRtk3t9eBXCogq20TtpNj4wcFPJ6rGDiKCAJVGoRXDhij%2FP6kkyhatMQQE%2FPx5pI7X%2BeSZ%2F86A6NBQ4iMiuXGgKns6E5%2FJu4C%2B0M3XFzAFvrg7V6YLp9FaSE%2FNNGdR2rIOFqyf7S03xsjsVJnhf1se8IG0%2B76HEEGSH83dJnU4pLY9oiXTfpeUqlvQzsnyQu%2B69Xkkz8QopDdonb%2Bih4hH3J3a13dAlL4uvg0svYgraDpEhbhVji999ohYTqbXtwtfggZiyGpsE8O3bf%2FQOO0tjP6iQXQvFz9bCkEmCycKeA9ir5OpktF5yUFHP4s69LH3GxEL9ke0QZQJdjg3JEPyJZAzIO9NBkXvLNa889IWvz71xvGMwtLOP1QY6mQGj74Sw%2Fwox3cKTgYsOMKtqvIGaeeixEj1h6zocKeR4AzKeL8wkoHKZKhicD%2BbW2oZ6jJlutM8aMAYZEFg3Qo50rz6UKl0yK%2BeAADPNSIGEEWRrZ%2F%2BHnA3SnV2P0NJ9xrmzjFamIy6Ww4c8PwVP1%2FICjVTXt4p1pwJuFTVUuqCftd3YM0ViwppEe%2FTsCg%2F0RxiPa%2FCNQz1DeZM%3D&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=69f301cc9b517cd5e8a8860dfce4c710547a54f5cb3918445e593dc3532c5516)
+- Compared **VSEPR theory vs. molecular-orbital/ligand-field theory** for d-block elements, establishing that MO/LFT is the scientifically appropriate framework for transition-metal coordination chemistry.
+
+### MATLAB Code Development (Iterative, With Corrections)
+
+- Built an initial periodic-table and hybrid-orbital visualizer, then identified and fixed two serious errors: **incorrect atomic numbers** in periods 6–7 (caused by the detached f-block row) and a **misleading universal hybridization label** applied to d-/f-block elements.
+- Rebuilt the tool as a single MATLAB class (`idgeometryexplorer.m`) with an explicitly validated 118-element dataset and idealised coordination-geometry models for main-group, d-block, and f-block cases — explicitly scoped as *not* orbital wavefunctions or crystallographic data.
+- Debugged a class-name mismatch and a `lower`-variable shadowing warning flagged in your MATLAB editor.
+- Created two silicon-specific scripts: a **diamond-cubic structure visualizer** (tetrahedral coordination, bond length, bond angle) and a **schematic indirect band-gap E–k diagram**, both reviewed against peer-reviewed and NIST sources for accuracy. [nist](https://www.nist.gov/system/files/documents/2023/02/07/NIST_periodictable_August22_iupac.pdf)
+
+### Quality Control
+
+- Applied deepseek-style adversarial self-scrutiny with confusion-matrix scoring to audit citation accuracy.
+- Assessed whether the Si visualizations were "sufficient" for your course level — concluding yes for Sections I–II, with band-diagram and solar-cell schematics needed to cover Sections III–V.
+
+### GitHub Publishing
+
+- Pushed a new `matlab/` folder to your repo **[-p-Orbital-Interactive-Learning-Guide](https://github.com/AnorakAdrianyc/-p-Orbital-Interactive-Learning-Guide)** (commit `2e7587b`), containing `idgeometryexplorer.m`, `silicon_diamond_cubic_visualizer.m`, `silicon_indirect_band_diagram_corrected.m`, and a README documenting scope and usage.
+
+### Canva
+
+- Attempted to generate a 5-slide presentation ("Silicon: From Crystal Structure to Semiconductor Band Gap") summarizing the MATLAB work for a course presentation. **This did not complete** — both attempts timed out on Canva's servers. This remains outstanding if you want to retry.
