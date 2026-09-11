@@ -1,0 +1,179 @@
+{
+  "page": {
+    "width": 1400,
+    "margin": 28,
+    "header_h": 92,
+    "footer_h": 86,
+    "caption_h": 44,
+    "gap": 16,
+    "bg": "#f7f4ee",
+    "ink": "#1c1916",
+    "accent": "#0f5c63",
+    "muted": "#5c564e"
+  },
+  "export_dir": "svg/matlab_export",
+  "output_dir": "svg",
+  "existing": {
+    "si_diamond_cubic": "src files for 9,11/Diamond-cubic SI.svg",
+    "si_band_ek": "src files for 9,11/Crystalline silicon_schematic indirect band gap.svg"
+  },
+  "species": {
+    "si": {
+      "id": "si",
+      "title": "Silicon — sp3 covalent crystal at 300 K",
+      "formula": "Si",
+      "beiser": "6.7, 8.5, 10.3, 10.6–10.7",
+      "gest": "I–IV",
+      "output": "si_orbitals_300K.svg",
+      "columns": 2,
+      "panels": [
+        {
+          "file": "si_filling.svg",
+          "caption": "Valence filling [Ne] 3s2 3p2 → four equivalent sp3. Beiser 8.5 / L2.",
+          "gest": "II"
+        },
+        {
+          "file": "si_radial_P.svg",
+          "caption": "P(r)=r²R² for 3s and 3p (Clementi–Raimondi Zeff). Half-bond 1.176 Å marked. Beiser 6.7.",
+          "gest": "II"
+        },
+        {
+          "file": "si_sp3_cross_section.svg",
+          "caption": "|ψ_sp3|² in the y=z plane: two lobes at 109.47°. Neighbours at 2.352 Å.",
+          "gest": "I–II"
+        },
+        {
+          "file": "si_sp3_tetrahedron.svg",
+          "caption": "Ideal tetrahedron in the diamond-cubic cage. a=5.431 Å (300 K). Not an XRD structure.",
+          "gest": "I"
+        },
+        {
+          "file": "si_bands_300K.svg",
+          "caption": "Atomic → sp3 → VB/CB. Eg=1.12 eV, Eg/kT≈43, ni≈1e10 cm⁻³. Indirect gap.",
+          "gest": "III–IV"
+        },
+        {
+          "file": "si_diamond_cubic",
+          "from": "existing",
+          "caption": "MATLAB diamond-cubic visualizer already in the repo (structure, not orbitals).",
+          "gest": "I"
+        },
+        {
+          "file": "si_band_ek",
+          "from": "existing",
+          "caption": "Schematic E–k: VBM at Γ, CBM along Δ toward X (phonon required).",
+          "gest": "III–IV"
+        }
+      ]
+    },
+    "tio2": {
+      "id": "tio2",
+      "title": "TiO2 — ligand-field / MO picture at 300 K",
+      "formula": "TiO2",
+      "beiser": "6.7, 8.5, 9.10, 10.6–10.7",
+      "gest": "II–V",
+      "output": "tio2_orbitals_300K.svg",
+      "columns": 2,
+      "panels": [
+        {
+          "file": "tio2_filling.svg",
+          "caption": "Formal count: Ti4+ d0 + O2− p6. Empty Ti 3d is the CB, filled O 2p is the VB.",
+          "gest": "II"
+        },
+        {
+          "file": "tio2_3d_angular.svg",
+          "caption": "Real 3d |Y|²: eg (dz2, dx2−y2) point at ligands; t2g (dxy, dxz, dyz) between. Beiser 6.7.",
+          "gest": "II–III"
+        },
+        {
+          "file": "tio2_octahedron_lft.svg",
+          "caption": "TiO6: L2 d2sp3 is a geometry mnemonic; electronic structure is LFT/MO (today’s conclusion).",
+          "gest": "II"
+        },
+        {
+          "file": "tio2_oxygen_sp2.svg",
+          "caption": "Oxygen sp2 σ framework (⅓ s + ⅔ p) plus p⊥ π-donor into Ti t2g. Beiser 8.5 / L2.",
+          "gest": "II"
+        },
+        {
+          "file": "tio2_radial_bond.svg",
+          "caption": "Hydrogenic P(r) of Ti 3d vs O 2p along a 1.95 Å bond. Slater 3d is much more diffuse.",
+          "gest": "II"
+        },
+        {
+          "file": "tio2_bands_300K.svg",
+          "caption": "Eg 3.0 eV (rutile, 413 nm) / 3.2 eV (anatase, 388 nm). kT does not populate the CB. VO donor sketched.",
+          "gest": "III–V"
+        }
+      ]
+    },
+    "eu3": {
+      "id": "eu3",
+      "title": "Eu3+ — buried 4f6, 7F0, Boltzmann ladder at 300 K",
+      "formula": "Eu3+",
+      "beiser": "6.7, 7.4–7.8, 9.2",
+      "gest": "II, V",
+      "output": "eu3_orbitals_300K.svg",
+      "columns": 2,
+      "panels": [
+        {
+          "file": "eu3_filling.svg",
+          "caption": "4f6 high spin: S=3, L=3, J=|L−S|=0 → 7F0. No hybridization label. Beiser 7.6, 7.8.",
+          "gest": "II"
+        },
+        {
+          "file": "eu3_4f_angular.svg",
+          "caption": "Seven real 4f angular |Y|² (l=3 extension of Beiser Table 6.1).",
+          "gest": "II"
+        },
+        {
+          "file": "eu3_radial_shielding.svg",
+          "caption": "4f lies inside 5s/5p. Shannon r=1.066 Å (CN 8); Eu–O≈2.4 Å. Weak ligand field, ionic bonding.",
+          "gest": "II"
+        },
+        {
+          "file": "eu3_polyhedra.svg",
+          "caption": "Ideal CN 8 square antiprism and CN 9 tricapped trigonal prism (idgeometryexplorer). Ligand-dependent.",
+          "gest": "I–II"
+        },
+        {
+          "file": "eu3_ladder_300K.svg",
+          "caption": "7F_J + 5D0. kT=208 cm⁻¹. Populations 65.7 / 32.0 / 2.2 %. 590 nm MD, 612 nm ED hypersensitive.",
+          "gest": "V"
+        }
+      ]
+    }
+  },
+  "poster": {
+    "output": "gest3015_orbital_atlas_2026-09-11.svg",
+    "title": "GEST3015 orbital atlas — Si, TiO2, Eu3+ at 300 K",
+    "width": 1600,
+    "learned_h": 210,
+    "kt_h": 200,
+    "row_h": 280,
+    "rows": [
+      {
+        "si": {"file": "si_filling.svg", "caption": "Si filling → sp3"},
+        "tio2": {"file": "tio2_filling.svg", "caption": "Ti4+ d0 / O2− p6"},
+        "eu3": {"file": "eu3_filling.svg", "caption": "Eu3+ 4f6 → 7F0"}
+      },
+      {
+        "si": {"file": "si_radial_P.svg", "caption": "Si 3s/3p P(r)"},
+        "tio2": {"file": "tio2_3d_angular.svg", "caption": "Ti 3d t2g / eg"},
+        "eu3": {"file": "eu3_4f_angular.svg", "caption": "Eu 4f angular set"}
+      },
+      {
+        "si": {"file": "si_sp3_cross_section.svg", "caption": "sp3 cloud 109.47°"},
+        "tio2": {"file": "tio2_octahedron_lft.svg", "caption": "TiO6 LFT, not d2sp3"},
+        "eu3": {"file": "eu3_radial_shielding.svg", "caption": "4f buried in 5s/5p"}
+      },
+      {
+        "si": {"file": "si_bands_300K.svg", "caption": "Eg=1.12 eV, Eg/kT≈43"},
+        "tio2": {"file": "tio2_bands_300K.svg", "caption": "Eg=3.0/3.2 eV, UV"},
+        "eu3": {"file": "eu3_ladder_300K.svg", "caption": "Boltzmann 7F_J at 300 K"}
+      }
+    ]
+  },
+  "learned_output": "gest3015_learned_today_2026-09-11.svg",
+  "kt_file": "kt_scale.svg"
+}

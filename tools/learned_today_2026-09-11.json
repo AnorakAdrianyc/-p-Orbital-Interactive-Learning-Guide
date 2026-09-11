@@ -1,0 +1,53 @@
+{
+  "date": "2026-09-11",
+  "course": "GEST3015 Smart Materials: Structures and Properties",
+  "title": "What I learned today",
+  "items": [
+    {
+      "heading": "L2 hybridization (Beiser 8.5)",
+      "text": "Molecular geometry follows valence-shell overlap: sigma along the bond axis, pi parallel to it. sp3 (tetrahedral), sp2 (trigonal planar + leftover p), and sp (linear + two leftover p) are linear combinations of s and p when that mixing lowers the energy, as in CH4, C2H4 and C2H2. L2 also writes dsp3 / d2sp3 for PF5 and SF6 as geometry mnemonics."
+    },
+    {
+      "heading": "VSEPR vs MO / ligand-field for d-block",
+      "text": "VSEPR and a single hybridization label are not the right language for TiO2. Ti(IV) is d0; the gap is O 2p (VB) to Ti 3d t2g (CB). e_g points at oxygen, t2g between. Use ligand-field / molecular-orbital theory, not 'd2sp3' as an electronic-structure assignment."
+    },
+    {
+      "heading": "Periodic table bookkeeping",
+      "text": "Atomic numbers must be stored, not inferred from the drawn table: the detached f-block made Hf look like Z=58. Hf is 72. Block colour is the differentiating electron (s/p/d/f), not a hybridization map. Eu is an f-block lanthanide; Eu3+ is 4f6, 7F0."
+    },
+    {
+      "heading": "Silicon as a covalent crystal (Beiser 10.3, 10.6-10.7)",
+      "text": "Diamond-cubic Si is four equivalent sp3 bonds, a=5.431 A, nn=2.352 A, angle 109.47 deg. The gap is indirect (VBM at Gamma, CBM along Delta toward X), Eg=1.12 eV at 300 K, so a phonon is required. ni ~ 1e10 cm^-3; Eg/kT ~ 43."
+    },
+    {
+      "heading": "Room temperature means occupation, not shape",
+      "text": "kT(300 K)=25.9 meV=208 cm^-1. Orbital clouds do not change with T. Temperature enters Fermi-Dirac carrier populations (Si, TiO2), Boltzmann populations of Eu3+ 7F_J (65.7 / 32.0 / 2.2 % for J=0,1,2), and 300 K lattice constants."
+    },
+    {
+      "heading": "Eu3+ as a spectroscopic probe",
+      "text": "4f sits inside 5s/5p, so ligand field is weak and bonding is ionic — no hybrid label. 5D0 to 7F1 (590 nm, magnetic dipole) and 5D0 to 7F2 (612 nm, hypersensitive electric dipole). Thermally populated 7F1 is the basis of luminescence thermometry."
+    },
+    {
+      "heading": "Still outstanding",
+      "text": "The Canva five-slide deck 'Silicon: From Crystal Structure to Semiconductor Band Gap' timed out and was not finished. A p-n junction / solar-cell schematic is still needed for GEST3015 section V / CILO 5."
+    }
+  ],
+  "beiser_map": [
+    "6.7 Electron probability density P(r)=r^2 R^2; most-probable r",
+    "7.4-7.6 Periodic table, shells, Hund's rule",
+    "7.8 Term symbols; 7F0 for Eu3+ 4f6",
+    "8.5 Hybrid orbitals (sp, sp2, sp3)",
+    "9.2 Maxwell-Boltzmann populations",
+    "9.10 Fermi-Dirac statistics",
+    "10.3 Covalent crystals (diamond / Si)",
+    "10.6-10.7 Band theory and semiconductor devices",
+    "10.9-10.10 Superconductivity (course map; not in these figures)"
+  ],
+  "gest3015_sections": [
+    "I structure of solids",
+    "II atomic bonding",
+    "III electronic structure in solids",
+    "IV semiconductors",
+    "V smart materials — applied studies"
+  ]
+}

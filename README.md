@@ -46,5 +46,46 @@ Here’s the fully updated HTML with all the improvements applied:
 | **Responsive typography** | Fluid `clamp()` scale (`--font-xs` → `--font-4xl`) |
 | **Fluid spacing system** | Full `clamp()` spacing scale (`--space-3xs` → `--space-3xl`) + semantic aliases (`--space-card`, `--space-gap`, etc.) applied throughout |
 
-You can download the file above and open it directly in a browser. All original interactive features (infographic builder, Feynman simulator, 3D viewer, orbital game, matrix, flashcards, dark mode) are preserved.
-<img width="796" height="876" alt="image" src="https://github.com/user-attachments/assets/7467cdde-a42e-48f4-94a1-b3d630cefab7" />
+## Orbital atlas (Si, TiO2, Eu3+ at 300 K)
+
+The `matlab/` folder now also exports Beiser-level hybrid-orbital and electron-cloud panels. Python then composes those panels (plus the diamond-cubic and E–k SVGs in `src files for 9,11/`) into course sheets.
+
+### Workflow
+
+1. In MATLAB R2026a (your machine):
+
+```matlab
+cd matlab
+make_orbital_atlas_svgs          % writes svg/matlab_export/*.svg + manifest.json
+```
+
+2. Commit `svg/matlab_export/` (this overwrites any Octave preview SVGs).
+
+3. Compose the sheets (stdlib Python, no extra packages):
+
+```bash
+python tools/compose_orbital_atlas.py
+```
+
+Outputs in `svg/`:
+
+| File | Contents |
+|------|----------|
+| `si_orbitals_300K.svg` | Silicon filling, P(r), sp3 cloud, tetrahedron, bands, plus the existing diamond-cubic and E–k figures |
+| `tio2_orbitals_300K.svg` | TiO2 filling, 3d t2g/eg, TiO6 LFT vs d2sp3, O sp2, bond P(r), UV gap |
+| `eu3_orbitals_300K.svg` | Eu3+ 4f6 → 7F0, 4f angular set, 4f vs 5s/5p shielding, CN 8/9, Boltzmann ladder |
+| `gest3015_learned_today_2026-09-11.svg` | What was learned on 2026-09-11 (L2 + GEST3015 mapping) |
+| `gest3015_orbital_atlas_2026-09-11.svg` | Poster: learned-today band, kT scale, three species columns |
+
+Missing MATLAB panels become dashed placeholders unless you pass `--strict`. Optional `--png` uses cairosvg when installed.
+
+### Room temperature
+
+Orbital **shape** does not change with T. kT(300 K) = 25.9 meV = 208 cm⁻¹. Temperature enters Fermi–Dirac occupation (Si, TiO2), Boltzmann occupation of Eu3+ 7F_J, and 300 K lattice constants. Every energy diagram carries a kT bar.
+
+### Scope
+
+Hydrogenic Z_eff clouds (Clementi–Raimondi) and idealised geometries. Not DFT, not XRD, and not a universal hybridization assignment for d- or f-block. For TiO2 use ligand-field/MO theory; for Eu3+ the 4f shell is buried inside 5s/5p.
+
+Tests: `cd tools && python -m pytest`. See `matlab/README.md` for the MATLAB package, Z_eff table, and references.
+
