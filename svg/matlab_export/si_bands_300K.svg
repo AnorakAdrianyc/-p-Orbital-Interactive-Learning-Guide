@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg height="525pt" width="750pt" viewBox="0 0 750 525" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+ <title>Figure 1</title>
+ <desc>
+Creator: GL2PS 1.4.2, (C) 1999-2020 C. Geuzaine
+For: Octave
+CreationDate: Fri Sep 11 12:03:32 2026
+</desc>
+ <defs/>
+ <polygon fill="#ffffff" points="0,0 750,0 750,525 0,525"/>
+ <g>
+  <polygon shape-rendering="crispEdges" fill="#ffffff" points="0,525 750,525 750,0 0,0"/>
+  <clipPath id="cp00750525">
+   <polygon points="0,525 750,525 750,0 0,0"/>
+  </clipPath>
+  <g clip-path="url(#cp00750525)">
+   <g transform="translate(281.93,29.406) rotate(-0,106.5,0)" font-weight="bold" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="12">
+    <text fill="rgb(0,0,0)" x="0 8 11 14 17 24 28 35 46 49 56 " y="-3">Si: atomic </text>
+    <text fill="rgb(0,0,0)" x="59 " y="-3">→</text>
+    <text fill="rgb(0,0,0)" x="71 74 81 88 95 100 103 110 " y="-3"> hybrid </text>
+    <text fill="rgb(0,0,0)" x="113 " y="-3">→</text>
+    <text fill="rgb(0,0,0)" x="125 128 135 142 149 156 163 166 173 177 180 187 194 201 204 " y="-3"> bands at 300 K</text>
+   </g>
+   <polygon shape-rendering="crispEdges" fill="#337fcc" points="179.016,307.038 179.016,335.86 120.845,335.86 120.845,307.038"/>
+   <polyline fill="none" stroke-linecap="butt" points="179.016,335.86 120.845,335.86 120.845,307.038 179.016,307.038 179.016,335.86" stroke="#262626" stroke-linejoin="miter" stroke-width="1"/>
+   <g transform="translate(144.93,325.449) rotate(-0,5,-4)" font-weight="bold" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="9">
+    <text fill="rgb(255,255,255)" x="0 5 " y="-0">3s</text>
+   </g>
+   <polygon shape-rendering="crispEdges" fill="#cc6626" points="179.016,167.046 179.016,212.338 120.845,212.338 120.845,167.046"/>
+   <polyline fill="none" stroke-linecap="butt" points="179.016,212.338 120.845,212.338 120.845,167.046 179.016,167.046 179.016,212.338" stroke="#262626" stroke-linejoin="miter" stroke-width="1"/>
+   <g transform="translate(144.43,194.692) rotate(-0,5.5,-5)" font-weight="bold" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="9">
+    <text fill="rgb(255,255,255)" x="0 5 " y="-2">3p</text>
+   </g>
+   <polygon shape-rendering="crispEdges" fill="#7259b2" points="283.723,212.338 283.723,269.981 225.552,269.981 225.552,212.338"/>
+   <polyline fill="none" stroke-linecap="butt" points="283.723,269.981 225.552,269.981 225.552,212.338 283.723,212.338 283.723,269.981" stroke="#262626" stroke-linejoin="miter" stroke-width="1"/>
+   <g transform="translate(244.138,246.16) rotate(-0,10.5,-5)" font-weight="bold" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="9">
+    <text fill="rgb(255,255,255)" x="0 5 11 16 " y="-2">sp^3</text>
+   </g>
+   <polygon shape-rendering="crispEdges" fill="#2672bf" points="405.882,269.981 405.882,360.565 330.26,360.565 330.26,269.981"/>
+   <polyline fill="none" stroke-linecap="butt" points="405.882,360.565 330.26,360.565 330.26,269.981 405.882,269.981 405.882,360.565" stroke="#262626" stroke-linejoin="miter" stroke-width="1"/>
+   <g transform="translate(338.071,320.273) rotate(-0,30,-5)" font-weight="bold" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="9">
+    <text fill="rgb(255,255,255)" x="0 6 12 18 24 27 33 39 42 45 48 54 " y="-2">bonding / VB</text>
+   </g>
+   <polygon shape-rendering="crispEdges" fill="#cc591e" points="405.882,87.1681 405.882,177.751 330.26,177.751 330.26,87.1681"/>
+   <polyline fill="none" stroke-linecap="butt" points="405.882,177.751 330.26,177.751 330.26,87.1681 405.882,87.1681 405.882,177.751" stroke="#262626" stroke-linejoin="miter" stroke-width="1"/>
+   <g transform="translate(329.571,137.46) rotate(-0,38.5,-5)" font-weight="bold" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="9">
+    <text fill="rgb(255,255,255)" x="0 5 11 14 17 23 29 35 41 44 50 56 59 62 65 71 " y="-2">antibonding / CB</text>
+   </g>
+   <polyline fill="none" stroke-linecap="butt" points="181.924,261.747 225.552,245.277" stroke="#000000" stroke-linejoin="round" stroke-width="0.5"/>
+   <polyline fill="none" stroke-linecap="butt" points="286.632,245.277 330.26,269.981" stroke="#000000" stroke-linejoin="round" stroke-width="0.5"/>
+   <g transform="translate(458.235,325.891) rotate(-0,-0,-6.5)" font-weight="bold" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="11">
+    <text fill="rgb(0,0,0)" x="0 " y="-4">E</text>
+    <text fill="rgb(0,0,0)" x="7 " y="-2" font-size="7.7">g</text>
+    <text fill="rgb(0,0,0)" x="12 15 21 24 30 33 39 45 48 54 61 64 68 74 80 86 89 97 " y="-4"> = 1.12 eV (300 K)</text>
+   </g>
+   <g transform="translate(458.235,362.947) rotate(-0,-0,-6.5)" font-weight="normal" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="10">
+    <text fill="rgb(0,0,0)" x="0 5 11 14 20 23 29 35 38 44 47 55 60 66 69 72 75 78 " y="-4">kT = 25.9 meV    E</text>
+    <text fill="rgb(0,0,0)" x="84 " y="-2" font-size="7">g</text>
+    <text fill="rgb(0,0,0)" x="88 91 94 97 102 108 " y="-4"> / kT </text>
+    <text fill="rgb(0,0,0)" x="111 " y="-4">≈</text>
+    <text fill="rgb(0,0,0)" x="117 120 126 " y="-4"> 43</text>
+   </g>
+   <g transform="translate(458.235,399.504) rotate(-0,-0,-6)" font-weight="normal" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="10">
+    <text fill="rgb(0,0,0)" x="0 " y="-2">n</text>
+    <text fill="rgb(0,0,0)" x="5 " y="-0" font-size="7">i</text>
+    <text fill="rgb(0,0,0)" x="7 10 13 18 24 30 33 38 43 46 52 55 58 60 68 73 78 84 " y="-2"> \approx 1\times10</text>
+    <text fill="rgb(0,0,0)" x="90 94 " y="-6" font-size="7">10</text>
+    <text fill="rgb(0,0,0)" x="98 101 106 " y="-2"> cm</text>
+    <text fill="rgb(0,0,0)" x="114 116 " y="-6" font-size="7">-3</text>
+    <text fill="rgb(0,0,0)" x="120 123 126 132 138 144 147 154 " y="-2"> (300 K)</text>
+   </g>
+   <g transform="translate(458.235,442.561) rotate(-0,-0,-12)" font-weight="normal" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="9">
+    <text fill="rgb(0,0,0)" x="0 3 8 13 15 18 23 28 31 33 38 43 48 50 52 58 64 72 74 79 82 84 91 96 103 110 115 118 120 126 132 140 142 147 152 157 160 162 " y="-16">Indirect gap: VBM at Gamma, CBM near X</text>
+    <text fill="rgb(0,0,0)" x="0 3 8 13 18 23 28 33 35 38 43 48 53 55 58 63 68 71 73 75 81 86 88 92 97 100 102 107 112 114 119 122 127 132 134 139 " y="-2" font-family="*, FreeSans">(phonon required). Beiser 10.6-10.7.</text>
+   </g>
+   <polyline fill="none" stroke-linecap="butt" points="420.424,269.981 420.424,252.951" stroke="#cc3f19" stroke-linejoin="round" stroke-width="3"/>
+   <g transform="translate(420.424,252.951) rotate(-0,-0,0)" font-weight="normal" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="8">
+    <text fill="rgb(204,63,25)" x="0 2 4 8 13 15 18 22 26 30 32 37 " y="-24">  kT (300 K)</text>
+    <text fill="rgb(204,63,25)" x="0 2 4 8 12 14 18 20 27 31 " y="-12">  25.9 meV</text>
+    <text fill="rgb(204,63,25)" x="0 2 4 8 12 16 18 22 " y="-0" font-family="*, FreeSans">  209 cm</text>
+    <text fill="rgb(204,63,25)" x="29 31 " y="-4" font-size="5.6">-1</text>
+   </g>
+   <g transform="translate(426.241,245.098) rotate(-0,-0,-4.5)" font-weight="normal" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="7">
+    <text fill="rgb(204,63,25)" x="0 4 8 10 12 14 16 18 24 28 31 35 37 39 43 45 47 50 52 55 57 61 63 65 67 69 " y="-2">bar \times8 for visibility</text>
+   </g>
+   <polyline fill="none" stroke-linecap="butt" points="336.077,269.981 400.065,269.981" stroke="#000000" stroke-linejoin="round" stroke-width="0.5" stroke-dasharray="9,7"/>
+   <polyline fill="none" stroke-linecap="butt" points="336.077,177.751 400.065,177.751" stroke="#000000" stroke-linejoin="round" stroke-width="0.5" stroke-dasharray="9,7"/>
+   <g transform="translate(408.79,230.366) rotate(-0,-0,-6.5)" font-weight="normal" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="10">
+    <text fill="rgb(0,0,0)" x="0 " y="-4">E</text>
+    <text fill="rgb(0,0,0)" x="6 " y="-2" font-size="7">g</text>
+   </g>
+   <g transform="translate(120.845,459.765) rotate(-0,-0,-4.5)" font-weight="normal" font-style="normal" xml:space="preserve" font-family="FreeSans" font-size="8">
+    <text fill="rgb(76,76,76)" x="0 6 9 13 15 17 21 23 25 29 33 37 41 45 47 49 53 55 60 63 65 69 73 77 81 85 89 93 97 101 103 105 107 111 115 119 123 127 131 133 135 139 143 145 148 153 157 160 167 169 172 178 180 183 187 191 194 196 198 202 204 208 212 214 " y="-2">Orbital shape is T-independent; occupation (Fermi-Dirac) is not.</text>
+   </g>
+  </g>
+ </g>
+</svg>

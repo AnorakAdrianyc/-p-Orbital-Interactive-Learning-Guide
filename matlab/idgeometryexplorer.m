@@ -100,34 +100,38 @@ classdef idgeometryexplorer
         end
 
         function [dirs,label] = geometry(name)
-            name = lower(erase(erase(string(name),'-'),' '));
+            if iscell(name)
+                name = name{1};
+            end
+            name = lower(char(name));
+            name = strrep(strrep(name, '-', ''), ' ', '');
             switch name
-                case "linear"
+                case 'linear'
                     dirs = [0 0 1;0 0 -1]; label = 'Linear, CN = 2';
-                case "tetrahedral"
+                case 'tetrahedral'
                     dirs = [1 1 1;1 -1 -1;-1 1 -1;-1 -1 1]/sqrt(3); label = 'Tetrahedral, CN = 4';
-                case "squareplanar"
+                case 'squareplanar'
                     dirs = [1 0 0;-1 0 0;0 1 0;0 -1 0]; label = 'Square planar, CN = 4';
-                case "trigonalbipyramidal"
+                case 'trigonalbipyramidal'
                     t = (0:2)'*2*pi/3; dirs = [cos(t) sin(t) zeros(3,1);0 0 1;0 0 -1]; label = 'Trigonal bipyramidal, CN = 5';
-                case "squarepyramidal"
+                case 'squarepyramidal'
                     dirs = [1 0 0;-1 0 0;0 1 0;0 -1 0;0 0 1]; label = 'Square pyramidal, CN = 5';
-                case "octahedral"
+                case 'octahedral'
                     dirs = [1 0 0;-1 0 0;0 1 0;0 -1 0;0 0 1;0 0 -1]; label = 'Octahedral, CN = 6';
-                case "trigonalprismatic"
+                case 'trigonalprismatic'
                     t = (0:2)'*2*pi/3; lowerFace = [cos(t) sin(t) -ones(3,1)]; upperFace = [cos(t+pi/3) sin(t+pi/3) ones(3,1)];
                     dirs = idgeometryexplorer.normalizeRows([lowerFace;upperFace]); label = 'Trigonal prismatic, CN = 6';
-                case "pentagonalbipyramidal"
+                case 'pentagonalbipyramidal'
                     t = (0:4)'*2*pi/5; dirs = [cos(t) sin(t) zeros(5,1);0 0 1;0 0 -1]; label = 'Pentagonal bipyramidal, CN = 7';
-                case "squareantiprismatic"
+                case 'squareantiprismatic'
                     t = (0:3)'*pi/2; bottomFace = [cos(t) sin(t) -ones(4,1)]; topFace = [cos(t+pi/4) sin(t+pi/4) ones(4,1)];
                     dirs = idgeometryexplorer.normalizeRows([bottomFace;topFace]); label = 'Square antiprismatic, CN = 8';
-                case "tricappedtrigonalprismatic"
+                case 'tricappedtrigonalprismatic'
                     t = (0:2)'*2*pi/3; lowerFace = [cos(t) sin(t) -ones(3,1)]; upperFace = [cos(t+pi/3) sin(t+pi/3) ones(3,1)];
                     caps = [0 1 0;sqrt(3)/2 -1/2 0;-sqrt(3)/2 -1/2 0];
                     dirs = idgeometryexplorer.normalizeRows([lowerFace;upperFace;caps]); label = 'Tricapped trigonal prism, CN = 9';
                 otherwise
-                    error('Unsupported idealised geometry: %s',name);
+                    error('Unsupported idealised geometry: %s', name);
             end
         end
     end

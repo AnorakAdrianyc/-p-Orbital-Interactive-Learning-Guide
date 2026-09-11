@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-09-11 12:03:36",
+  "generator": "Octave",
+  "version": "8.4.0",
+  "temperature_K": 300,
+  "kT_meV": 25.852,
+  "kT_cm_inv": 208.51,
+  "self_test": "orb.selfTest passed: radial, angular, hybrid, Eu3+ 300 K.",
+  "scope": "Hydrogenic Z_eff clouds and idealised geometries. Not DFT, not crystallographic coordinates, not a hybridization map for d/f-block.",
+  "zeff": {
+    "Si_3s": 4.9032,
+    "Si_3p": 4.2852,
+    "O_2s": 4.4916,
+    "O_2p": 4.4532,
+    "Ti_3d": 8.1414,
+    "Ti_4s": 4.8168,
+    "Eu_4f": 24.32,
+    "Eu_5s": 18.59,
+    "Eu_5p": 16.555
+  },
+  "slater_zeff": {
+    "Si_3p": 4.15,
+    "O_2p": 4.55,
+    "Ti_3d": 3.65
+  },
+  "files": [
+    "si_filling.svg",
+    "si_radial_P.svg",
+    "si_sp3_cross_section.svg",
+    "si_sp3_tetrahedron.svg",
+    "si_bands_300K.svg",
+    "tio2_filling.svg",
+    "tio2_3d_angular.svg",
+    "tio2_octahedron_lft.svg",
+    "tio2_oxygen_sp2.svg",
+    "tio2_radial_bond.svg",
+    "tio2_bands_300K.svg",
+    "eu3_filling.svg",
+    "eu3_4f_angular.svg",
+    "eu3_radial_shielding.svg",
+    "eu3_polyhedra.svg",
+    "eu3_ladder_300K.svg",
+    "kt_scale.svg"
+  ]
+}
