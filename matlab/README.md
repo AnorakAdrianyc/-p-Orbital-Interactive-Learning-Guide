@@ -24,7 +24,47 @@ A schematic E–k diagram showing why silicon has an **indirect** band gap: the 
 
 **Scope:** a qualitative teaching schematic, not a fitted or first-principles band structure.
 
-## Suggested usage sequence
+## Orbital atlas SVG export (Si, TiO2, Eu3+ at 300 K)
+
+Hydrogenic radial functions, real spherical harmonics, sp/sp2/sp3 hybrids, and 300 K occupation diagrams for the three GEST3015 case studies. Run this **in MATLAB R2026a** so the SVGs are vector (or MATLAB's own rasterization for 3-D panels). Octave is only a CI/preview stand-in and stamps `generator: Octave` in `svg/matlab_export/manifest.json`.
+
+```matlab
+cd matlab
+make_orbital_atlas_svgs
+```
+
+That runs `orb.selfTest`, then:
+
+| Driver | Panels written under `svg/matlab_export/` |
+|--------|-------------------------------------------|
+| `si_orbital_atlas_svg.m` | `si_filling.svg`, `si_radial_P.svg`, `si_sp3_cross_section.svg`, `si_sp3_tetrahedron.svg`, `si_bands_300K.svg` |
+| `tio2_orbital_atlas_svg.m` | `tio2_filling.svg`, `tio2_3d_angular.svg`, `tio2_octahedron_lft.svg`, `tio2_oxygen_sp2.svg`, `tio2_radial_bond.svg`, `tio2_bands_300K.svg` |
+| `eu3_orbital_atlas_svg.m` | `eu3_filling.svg`, `eu3_4f_angular.svg`, `eu3_radial_shielding.svg`, `eu3_polyhedra.svg`, `eu3_ladder_300K.svg` |
+| `kt_scale_svg.m` | `kt_scale.svg` |
+
+Then compose sheets with stdlib Python:
+
+```bash
+python tools/compose_orbital_atlas.py
+```
+
+### `+orb` package (MATLAB and Octave)
+
+| Function | Role |
+|----------|------|
+| `radialR` / `radialP` | Hydrogenic R_nl and P(r)=r²R² (Beiser 6.7, Table 6.1 convention) |
+| `realY` | Real s, p, d, f angular functions |
+| `hybrid` | sp, sp2, sp3 coefficient sets (Beiser 8.5 / L2) |
+| `zeff` | Clementi–Raimondi Z_eff (Si 3s 4.903, 3p 4.285; O 2p 4.453; Ti 3d 8.141; Eu 4f 24.32, 5s 18.59, 5p 16.56) |
+| `slaterZeff` | Slater-rule cross-check (Si 3p 4.15, O 2p 4.55, Ti 3d 3.65) |
+| `boltzmann` | g_i exp(−E_i/kT)/Z (Beiser 9.2) |
+| `selfTest` | Normalisation, r_mp(1s/2p/3d), Y orthonormality, hybrid orthonormality, Eu3+ 300 K populations |
+
+**Room temperature:** orbital shape is T-independent. kT(300 K)=25.9 meV=208 cm⁻¹ sets Fermi–Dirac (Si, TiO2) and Boltzmann (Eu3+ 7F_J ≈ 65.7 / 32.0 / 2.2 %) occupation, plus 300 K lattice constants.
+
+**Scope:** hydrogenic Z_eff teaching clouds and idealised polyhedra. Not DFT, not crystallographic coordinates. TiO2 electronic structure is ligand-field/MO (not a `d2sp3` assignment). Eu3+ 4f is buried inside 5s/5p — no hybrid label.
+
+## Suggested usage sequence (structure visualizers)
 
 ```matlab
 idgeometryexplorer.validateElementData();
@@ -41,5 +81,8 @@ GEST3015 covers: (I) structure of solids, (II) atomic bonding, (III) electronic 
 ## References
 
 - NIST, Periodic Table of the Elements / Atomic Properties of the Elements.
-- A. Beiser, *Concepts of Modern Physics*, 6th ed., McGraw-Hill, 2003, ch. 10.
+- A. Beiser, *Concepts of Modern Physics*, 6th ed., McGraw-Hill, 2003, §§6.7, 7.4–7.8, 8.5, 9.2, 9.10, 10.3, 10.6–10.7.
+- E. Clementi and D. L. Raimondi, *J. Chem. Phys.* **38**, 2686 (1963); E. Clementi, D. L. Raimondi, W. P. Reinhardt, *J. Chem. Phys.* **47**, 1300 (1967).
+- K. Binnemans, *Coord. Chem. Rev.* **295**, 1 (2015) (Eu3+ free-ion 7F_J and 5D0).
+- R. D. Shannon, *Acta Cryst.* A**32**, 751 (1976) (Eu3+ ionic radius, CN 8).
 - Representative silicon indirect band gap ≈ 1.1–1.12 eV at 300 K (value depends on temperature, strain, doping, and measurement convention — verify against your cited source before submission).
