@@ -1,17 +1,32 @@
 # p-Orbital Interactive Learning Guide
 
-This folder contains an interactive HTML learning resource for p-orbitals, built from two partial source files.
+This repository is a GEST 3015 Fundamentals prep project for learning and visualizing p-orbitals, quantum numbers, and related atomic and solid-state concepts. It combines an interactive HTML learning guide with supporting MATLAB and Python tools for generating educational orbital-atlas visuals.
 
-## Files
+## Overview
 
-- `Quantum Numbers & p-Orbitals1.html` — the first partial fragment containing the full HTML head, CSS, navigation, module 1 (Infographic Builder), and module 2 (Feynman Simulator).
-- `Quantum Numvers and p-Orbitals2.html` — the second fragment containing module 3 (3D Viewer), module 4 (Orbital Filling Game), module 5 (Compare Matrix), module 6 (Flashcards), and the remaining navigation script.
-- `Quantum Numbers & p-Orbitals Combined.html` — the merged full HTML page combining both fragments into a single working interactive experience.
+The project includes:
 
-## How to use
+- A browser-based interactive learning page covering p-orbitals, quantum numbers, and related chemistry/physics concepts.
+- Source fragments that were merged into a complete HTML experience.
+- MATLAB scripts for periodic-table, crystal-structure, and band-diagram visualizers.
+- Python utilities for composing SVG outputs from MATLAB-generated panels.
+- Generated SVG assets for classroom and study use.
+
+## Repository contents
+
+- `Quantum Numbers & p-Orbitals Combined.html` — the main interactive webpage to open in a browser.
+- `Quantum Numbers & p-Orbitals1.html` — first partial source fragment.
+- `Quantum Numvers and p-Orbitals2.html` — second partial source fragment (the original filename contains a typo).
+- `matlab/` — MATLAB visualizers and supporting functions for orbital and materials content.
+- `tools/` — Python utilities for assembling SVG outputs and related workflows.
+- `svg/` — generated SVG assets and export directories.
+- `src files for 9,11/` — supporting source assets used by the learning materials.
+- `Skills/` — additional project skill assets.
+
+## Quick start
 
 1. Open `Quantum Numbers & p-Orbitals Combined.html` in a web browser.
-2. Use the navigation bar to switch between sections:
+2. Navigate through the sections such as:
    - Infographic Builder
    - Feynman Simulator
    - 3D Viewer
@@ -19,78 +34,59 @@ This folder contains an interactive HTML learning resource for p-orbitals, built
    - Compare Matrix
    - Flashcards
    - How to Use
-3. Use the interactive controls to edit the infographic, analyze explanations, view the 3D model, generate game content, check matrix answers, and flip flashcards.
 
-## Notes
+## MATLAB and SVG workflow
 
-- The combined file is the recommended version to use because it contains the complete page structure and merged content from both supporting fragments.
-- The second fragment file contains a typo in the file name: `Quantum Numvers and p-Orbitals2.html`.
-
-## Recommended workflow
-
-- If you want to edit the page, modify `Quantum Numbers & p-Orbitals Combined.html` directly.
-- Keep the original fragments as reference if you need to trace where each module came from.
-
-## New implementations:
-Here’s the fully updated HTML with all the improvements applied:
-
-**File saved to:** 
-
-### What’s included in this version
-
-| Feature | Details |
-|---------|---------|
-| **CSS overlap fixed** | Infographic uses a clean 4-row grid (Header → Orientations \| Shape → Capacity → Footer) with no overlapping cells |
-| **Responsive grid** | Stacks to single column ≤ 900 px |
-| **Media query breakpoints** | 900 px / 768 px / 480 px |
-| **Responsive typography** | Fluid `clamp()` scale (`--font-xs` → `--font-4xl`) |
-| **Fluid spacing system** | Full `clamp()` spacing scale (`--space-3xs` → `--space-3xl`) + semantic aliases (`--space-card`, `--space-gap`, etc.) applied throughout |
-
-## Orbital atlas (Si, TiO2, Eu3+ at 300 K)
-
-The `matlab/` folder now also exports Beiser-level hybrid-orbital and electron-cloud panels. Python then composes those panels (plus the diamond-cubic and E–k SVGs in `src files for 9,11/`) into course sheets.
-
-### Workflow
-
-1. In MATLAB R2026a (your machine):
+To generate the orbital-atlas SVG panels in MATLAB:
 
 ```matlab
 cd matlab
-make_orbital_atlas_svgs          % writes svg/matlab_export/*.svg + manifest.json
+make_orbital_atlas_svgs
 ```
 
-2. Commit `svg/matlab_export/` (this overwrites any Octave preview SVGs).
+This writes the exported SVG panels under `svg/matlab_export/`.
 
-3. Compose the sheets (stdlib Python, no extra packages):
+To compose the final sheets with Python:
 
 ```bash
 python tools/compose_orbital_atlas.py
 ```
 
-Outputs in `svg/`:
+The generated outputs are placed in `svg/` and include orbital-atlas sheets for the main case studies used in the course.
 
-| File | Contents |
-|------|----------|
-| `si_orbitals_300K.svg` | Silicon filling, P(r), sp3 cloud, tetrahedron, bands, plus the existing diamond-cubic and E–k figures |
-| `tio2_orbitals_300K.svg` | TiO2 filling, 3d t2g/eg, TiO6 LFT vs d2sp3, O sp2, bond P(r), UV gap |
-| `eu3_orbitals_300K.svg` | Eu3+ 4f6 → 7F0, 4f angular set, 4f vs 5s/5p shielding, CN 8/9, Boltzmann ladder |
-| `gest3015_learned_today_2026-09-11.svg` | What was learned on 2026-09-11 (L2 + GEST3015 mapping) |
-| `gest3015_orbital_atlas_2026-09-11.svg` | Poster: learned-today band, kT scale, three species columns |
+## Project structure
 
-Missing MATLAB panels become dashed placeholders unless you pass `--strict`. Optional `--png` uses cairosvg when installed.
+```text
+.
+├── Quantum Numbers & p-Orbitals Combined.html
+├── Quantum Numbers & p-Orbitals1.html
+├── Quantum Numvers and p-Orbitals2.html
+├── README.md
+├── matlab/
+├── tools/
+├── svg/
+├── src files for 9,11/
+├── Skills/
+├── .gitignore
+└── skills-lock.json
+```
 
-### Room temperature
+## Notes
 
-Orbital **shape** does not change with T. kT(300 K) = 25.9 meV = 208 cm⁻¹. Temperature enters Fermi–Dirac occupation (Si, TiO2), Boltzmann occupation of Eu3+ 7F_J, and 300 K lattice constants. Every energy diagram carries a kT bar.
+- The combined HTML file is the recommended version to use because it contains the merged, complete interactive experience.
+- The original fragment files are retained as reference material for tracing the development of each section.
+- MATLAB content is intended for educational use and is built around idealized models and teaching approximations rather than full first-principles simulations.
+- Sensitive credentials or secrets should not be stored in repository files; use environment variables or secure secret-management tools instead.
 
-### Scope
+## Course context
 
-Hydrogenic Z_eff clouds (Clementi–Raimondi) and idealised geometries. Not DFT, not XRD, and not a universal hybridization assignment for d- or f-block. For TiO2 use ligand-field/MO theory; for Eu3+ the 4f shell is buried inside 5s/5p.
+This repository supports learning objectives tied to GEST 3015, especially around:
 
-Tests: `cd tools && python -m pytest`. See `matlab/README.md` for the MATLAB package, Z_eff table, and references.
+- quantum numbers and atomic orbitals
+- p-orbital shapes and orientations
+- electronic structure concepts
+- simple visualization of atomic and material behavior
 
-### Supabase password:
-7990hjfgA#s
+## License and usage
 
-### Cursor mcp integration skill
-in cursor folder
+This project is intended for educational and course-support use. Please retain attribution in any derivative or classroom materials that reuse the content.
