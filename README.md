@@ -89,3 +89,5 @@ Hydrogenic Z_eff clouds (Clementi–Raimondi) and idealised geometries. Not DFT,
 
 Tests: `cd tools && python -m pytest`. See `matlab/README.md` for the MATLAB package, Z_eff table, and references.
 
+###Supabase password:
+7990hjfgA#s
